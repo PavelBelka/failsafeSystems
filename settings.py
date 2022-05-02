@@ -22,7 +22,7 @@ class Settings:
 
 
     def get_settings(self):
-        pass
+        return [self.number_network_failures, self.number_repair_teams, self.recovery_intensity, self.recovery_policy]
 
     def set_settings(self):
         pass

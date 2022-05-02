@@ -8,6 +8,7 @@ class Core:
         self.settings = settings
         self.model = model
         self.view = MainWindow(self)
+        self.view.set_settings(self.settings.get_settings())
         self.graph = None
 
     def window_show(self):

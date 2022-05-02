@@ -258,3 +258,16 @@ class MainWindow(QMainWindow):
         for index, node in enumerate(failure_nodes):
             self.failure_node_table.insertRow(index)
             self.failure_node_table.setItem(index, 0, QTableWidgetItem(node.name))
+
+    def set_settings(self, settings):
+        self.number_failing_spinBox.setValue(settings[0])
+        self.number_repair_teams_spinBox.setValue(settings[1])
+        self.intensity_repair_spinBox.setValue(settings[2])
+        if settings[3] == 'LIFO':
+            self.politics_LIFO_radioButton.setChecked(True)
+        elif settings[3] == 'FIFO':
+            self.politics_FIFO_radioButton.setChecked(True)
+        elif settings[3] == 'FAST_FIRST':
+            self.politics_FAST_radioButton.setChecked(True)
+        elif settings[3] == 'LONG_FIRST':
+            self.politics_LONG_radioButton.setChecked(True)
