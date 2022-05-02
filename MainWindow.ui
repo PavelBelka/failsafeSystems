@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>640</width>
+      <height>458</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="data">
+     <attribute name="title">
+      <string>Данные</string>
+     </attribute>
+     <widget class="QGroupBox" name="graphGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>320</width>
+        <height>420</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Топология</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="graphSettingsgroupBox">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>0</y>
+        <width>300</width>
+        <height>420</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Настройки графа</string>
+      </property>
+      <widget class="QLabel" name="label_topology">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>64</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Топология:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="topology_comboBox">
+       <property name="geometry">
+        <rect>
+         <x>74</x>
+         <y>18</y>
+         <width>120</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="topology_Button">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>75</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Построить</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="result">
+     <attribute name="title">
+      <string>Результат</string>
+     </attribute>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuGraph">
+    <property name="title">
+     <string>Граф</string>
+    </property>
+    <addaction name="menu_add_graph"/>
+    <addaction name="menu_delete_graph"/>
+   </widget>
+   <addaction name="menuGraph"/>
+  </widget>
+  <action name="menu_add_graph">
+   <property name="text">
+    <string>Новый граф</string>
+   </property>
+  </action>
+  <action name="menu_delete_graph">
+   <property name="text">
+    <string>Удалить модель графа</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
