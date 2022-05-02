@@ -1,0 +1,28 @@
+import yaml
+
+class Settings:
+    def __init__(self):
+        self.number_network_failures = 0
+        self.number_repair_teams = 0
+        self.recovery_intensity = 0.00
+        self.recovery_policy = 'LIFO'
+
+    def read_settings(self, name_file):
+        with open(name_file) as file:
+            read_data = yaml.load(file, Loader=yaml.FullLoader)
+        self.number_network_failures = read_data['number of network failures']
+        self.number_repair_teams = read_data['number of repair teams']
+        self.recovery_intensity = read_data['recovery intensity']
+        self.recovery_policy = read_data['recovery policy']
+
+    def create_settings(self, name_file):
+        data = {'number of network failures': 0, 'number of repair teams': 0, 'recovery intensity': 0.00, 'recovery policy': 'LIFO'}
+        with open(name_file, 'w') as file:
+            yaml.dump(data, file)
+
+
+    def get_settings(self):
+        pass
+
+    def set_settings(self):
+        pass
