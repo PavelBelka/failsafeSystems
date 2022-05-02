@@ -172,9 +172,10 @@ class MainWindow(QMainWindow):
         self.politics_LONG_radioButton.setObjectName("politics_LONG_radioButton")
         self.verticalLayout.addWidget(self.politics_LONG_radioButton)
 
-        self.save_settings_pushButton = QPushButton(self.settings)
-        self.save_settings_pushButton.setObjectName("save_settings_pushButton")
-        self.save_settings_pushButton.setGeometry(QRect(5, 125, 75, 24))
+        self.save_settings_Button = QPushButton(self.settings)
+        self.save_settings_Button.setObjectName("save_settings_Button")
+        self.save_settings_Button.setGeometry(QRect(5, 125, 75, 24))
+        self.save_settings_Button.clicked.connect(self.saveSettingsClick)
 
         self.tabWidget.addTab(self.data, "")
         self.tabWidget.addTab(self.settings, "")
@@ -235,7 +236,7 @@ class MainWindow(QMainWindow):
         self.politics_FIFO_radioButton.setText(QCoreApplication.translate("MainWindow", "FIFO", None))
         self.politics_FAST_radioButton.setText(QCoreApplication.translate("MainWindow", "FAST_FIRST", None))
         self.politics_LONG_radioButton.setText(QCoreApplication.translate("MainWindow", "LONG_FIRST", None))
-        self.save_settings_pushButton.setText(QCoreApplication.translate("MainWindow", "Сохранить", None))
+        self.save_settings_Button.setText(QCoreApplication.translate("MainWindow", "Сохранить", None))
 
     def createGraphClick(self):
         choice = self.topology_comboBox.currentText()
@@ -243,6 +244,21 @@ class MainWindow(QMainWindow):
 
     def deleteGraphClick(self):
         self.presenter.handle_graph_delete_button_clicked()
+
+    def saveSettingsClick(self):
+        check = None
+        if self.politics_LIFO_radioButton.isChecked():
+            check = 'LIFO'
+        elif self.politics_FIFO_radioButton.isChecked():
+            check = 'FIFO'
+        elif self.politics_FAST_radioButton.isChecked():
+            check = 'FAST_FIRST'
+        elif self.politics_LONG_radioButton.isChecked():
+            check = 'LONG_FIRST'
+        self.presenter.handle_save_settings_button_clicked(self.number_failing_spinBox.value(),
+                                                           self.number_repair_teams_spinBox.value(),
+                                                           self.intensity_repair_spinBox.value(),
+                                                           check)
 
     def drawGraph(self, graph, labels):
         pos = drawing.spring_layout(graph)

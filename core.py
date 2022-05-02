@@ -36,3 +36,5 @@ class Core:
         gc.collect()
         self.view.clearGraph()
 
+    def handle_save_settings_button_clicked(self, number_failure, number_repair, intensity, police_repair):
+        self.settings.set_settings('settings.yaml', [number_failure, number_repair, intensity, police_repair])
