@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QTabWidget, QLabel, QPushButton, QMenuBar, QMenu, QGroupBox, QComboBox, \
-    QMainWindow, QHBoxLayout, QLineEdit, QTableWidget, QTableWidgetItem, QCheckBox
+    QMainWindow, QHBoxLayout, QLineEdit, QTableWidget, QTableWidgetItem, QCheckBox, QSpinBox, QDoubleSpinBox, \
+    QRadioButton, QVBoxLayout
 from PyQt6.QtCore import QRect, QCoreApplication, QMetaObject
 from PyQt6.QtGui import QAction
 import matplotlib.pyplot as plt
@@ -23,6 +24,8 @@ class MainWindow(QMainWindow):
         self.tabWidget.setGeometry(QRect(0, 0, 960, 698))
         self.data = QWidget()
         self.data.setObjectName("data")
+        self.settings = QWidget()
+        self.settings.setObjectName("settings")
 
         self.graphGroup = QGroupBox(self.data)
         self.graphGroup.setObjectName("graphGroupBox")
@@ -113,7 +116,68 @@ class MainWindow(QMainWindow):
         self.simulation_Button.setGeometry(QRect(10, 595, 80, 24))
 #        self.topology_Button.clicked.connect(self.createGraphClick)
 
+        self.label_number_failing = QLabel(self.settings)
+        self.label_number_failing.setObjectName("label_number_failing")
+        self.label_number_failing.setGeometry(QRect(5, 10, 170, 16))
+
+        self.number_failing_spinBox = QSpinBox(self.settings)
+        self.number_failing_spinBox.setObjectName("number_failing_spinBox")
+        self.number_failing_spinBox.setGeometry(QRect(185, 9, 100, 22))
+        self.number_failing_spinBox.setMaximum(1000000000)
+        self.number_failing_spinBox.setDisplayIntegerBase(10)
+
+        self.label_number_repair_teams = QLabel(self.settings)
+        self.label_number_repair_teams.setObjectName("label_number_repair_teams")
+        self.label_number_repair_teams.setGeometry(QRect(5, 41, 175, 16))
+
+        self.number_repair_teams_spinBox = QSpinBox(self.settings)
+        self.number_repair_teams_spinBox.setObjectName("number_repair_teams_spinBox")
+        self.number_repair_teams_spinBox.setGeometry(QRect(185, 40, 100, 22))
+
+        self.label_intensity_repair = QLabel(self.settings)
+        self.label_intensity_repair.setObjectName("label_intensity_repair")
+        self.label_intensity_repair.setGeometry(QRect(4, 73, 179, 16))
+
+        self.intensity_repair_spinBox = QDoubleSpinBox(self.settings)
+        self.intensity_repair_spinBox.setObjectName("intensity_repair_spinBox")
+        self.intensity_repair_spinBox.setGeometry(QRect(185, 72, 100, 22))
+        self.intensity_repair_spinBox.setSingleStep(0.01)
+
+        self.politicsRepairGroupBox = QGroupBox(self.settings)
+        self.politicsRepairGroupBox.setObjectName("politicsRepairGroupBox")
+        self.politicsRepairGroupBox.setGeometry(QRect(305, 0, 170, 115))
+
+        self.widget = QWidget(self.politicsRepairGroupBox)
+        self.widget.setObjectName("widget")
+        self.widget.setGeometry(QRect(10, 19, 91, 86))
+
+        self.verticalLayout = QVBoxLayout(self.widget)
+        self.verticalLayout.setSpacing(5)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.politics_LIFO_radioButton = QRadioButton(self.widget)
+        self.politics_LIFO_radioButton.setObjectName("politics_LIFO_radioButton")
+        self.verticalLayout.addWidget(self.politics_LIFO_radioButton)
+
+        self.politics_FIFO_radioButton = QRadioButton(self.widget)
+        self.politics_FIFO_radioButton.setObjectName("politics_FIFO_radioButton")
+        self.verticalLayout.addWidget(self.politics_FIFO_radioButton)
+
+        self.politics_FAST_radioButton = QRadioButton(self.widget)
+        self.politics_FAST_radioButton.setObjectName("politics_FAST_radioButton")
+        self.verticalLayout.addWidget(self.politics_FAST_radioButton)
+
+        self.politics_LONG_radioButton = QRadioButton(self.widget)
+        self.politics_LONG_radioButton.setObjectName("politics_LONG_radioButton")
+        self.verticalLayout.addWidget(self.politics_LONG_radioButton)
+
+        self.save_settings_pushButton = QPushButton(self.settings)
+        self.save_settings_pushButton.setObjectName("save_settings_pushButton")
+        self.save_settings_pushButton.setGeometry(QRect(5, 125, 75, 24))
+
         self.tabWidget.addTab(self.data, "")
+        self.tabWidget.addTab(self.settings, "")
         self.result = QWidget()
         self.result.setObjectName("result")
         self.tabWidget.addTab(self.result, "")
@@ -142,7 +206,6 @@ class MainWindow(QMainWindow):
         self.retranslateUi()
         self.tabWidget.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(self)
 
     def retranslateUi(self):
@@ -155,6 +218,7 @@ class MainWindow(QMainWindow):
         self.label_end_node.setText(QCoreApplication.translate("MainWindow", "Конечный узел:", None))
         self.label_failure_node.setText(QCoreApplication.translate("MainWindow", "Таблица отказа узлов:", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.data), QCoreApplication.translate("MainWindow", "Данные", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), QCoreApplication.translate("MainWindow", "Доп. настройки", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.result), QCoreApplication.translate("MainWindow", "Результат", None))
         self.menuGraph.setTitle(QCoreApplication.translate("MainWindow", "Граф", None))
         self.menu_add_graph.setText(QCoreApplication.translate("MainWindow", "Новый граф"))
@@ -163,6 +227,15 @@ class MainWindow(QMainWindow):
         self.label_intensity_connection.setText(QCoreApplication.translate("MainWindow", "Интенсивность отказа связи:"))
         self.is_recovery_checkBox.setText(QCoreApplication.translate("MainWindow", "Восстановление системы"))
         self.simulation_Button.setText(QCoreApplication.translate("MainWindow", "Симмуляция"))
+        self.label_number_failing.setText(QCoreApplication.translate("MainWindow", "Количество отказов в системе:", None))
+        self.label_number_repair_teams.setText(QCoreApplication.translate("MainWindow", "Количество ремонтных бригад:", None))
+        self.label_intensity_repair.setText(QCoreApplication.translate("MainWindow", "Интенсивность восстановления:", None))
+        self.politicsRepairGroupBox.setTitle(QCoreApplication.translate("MainWindow", "Политика восстановления", None))
+        self.politics_LIFO_radioButton.setText(QCoreApplication.translate("MainWindow", "LIFO", None))
+        self.politics_FIFO_radioButton.setText(QCoreApplication.translate("MainWindow", "FIFO", None))
+        self.politics_FAST_radioButton.setText(QCoreApplication.translate("MainWindow", "FAST_FIRST", None))
+        self.politics_LONG_radioButton.setText(QCoreApplication.translate("MainWindow", "LONG_FIRST", None))
+        self.save_settings_pushButton.setText(QCoreApplication.translate("MainWindow", "Сохранить", None))
 
     def createGraphClick(self):
         choice = self.topology_comboBox.currentText()

@@ -6,12 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>960</width>
+    <height>720</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Оценка надежности сетей</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -19,12 +25,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>640</width>
-      <height>458</height>
+      <width>960</width>
+      <height>698</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="data">
      <attribute name="title">
@@ -35,8 +41,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>320</width>
-        <height>420</height>
+        <width>625</width>
+        <height>660</height>
        </rect>
       </property>
       <property name="title">
@@ -46,10 +52,10 @@
      <widget class="QGroupBox" name="graphSettingsgroupBox">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>635</x>
         <y>0</y>
-        <width>300</width>
-        <height>420</height>
+        <width>310</width>
+        <height>660</height>
        </rect>
       </property>
       <property name="title">
@@ -71,7 +77,7 @@
       <widget class="QComboBox" name="topology_comboBox">
        <property name="geometry">
         <rect>
-         <x>74</x>
+         <x>80</x>
          <y>18</y>
          <width>120</width>
          <height>22</height>
@@ -91,6 +97,299 @@
         <string>Построить</string>
        </property>
       </widget>
+      <widget class="QLabel" name="label_topology_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>84</y>
+         <width>100</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Начальный узел:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>82</y>
+         <width>130</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_topology_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>114</y>
+         <width>100</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Конечный узел:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_2">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>112</y>
+         <width>130</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTableView" name="tableView">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>165</y>
+         <width>295</width>
+         <height>160</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_topology_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>144</y>
+         <width>124</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Таблица отказа узлов:</string>
+       </property>
+      </widget>
+      <widget class="QTableView" name="tableView_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>355</y>
+         <width>295</width>
+         <height>160</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_topology_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>335</y>
+         <width>130</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Таблица длины связей:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_topology_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>525</y>
+         <width>160</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Интенсивность отказа связи:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>595</y>
+         <width>80</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Симмуляция</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_3">
+       <property name="geometry">
+        <rect>
+         <x>175</x>
+         <y>523</y>
+         <width>130</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>555</y>
+         <width>160</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Восстановление системы</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="settings">
+     <attribute name="title">
+      <string>Доп. настройки</string>
+     </attribute>
+     <widget class="QLabel" name="label_number_failing">
+      <property name="geometry">
+       <rect>
+        <x>5</x>
+        <y>10</y>
+        <width>170</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Количество отказов в системе:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_number_repair_teams">
+      <property name="geometry">
+       <rect>
+        <x>5</x>
+        <y>41</y>
+        <width>175</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Количество ремонтных бригад:</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="number_repair_teams_spinBox">
+      <property name="geometry">
+       <rect>
+        <x>185</x>
+        <y>40</y>
+        <width>100</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>185</x>
+        <y>72</y>
+        <width>100</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="singleStep">
+       <double>0.010000000000000</double>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_intensity_repair">
+      <property name="geometry">
+       <rect>
+        <x>4</x>
+        <y>73</y>
+        <width>179</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Интенсивность восстановления:</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="number_failing_spinBox">
+      <property name="geometry">
+       <rect>
+        <x>185</x>
+        <y>9</y>
+        <width>100</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>1000000000</number>
+      </property>
+      <property name="displayIntegerBase">
+       <number>10</number>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="politicsRepairGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>305</x>
+        <y>0</y>
+        <width>170</width>
+        <height>115</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Политика восстановления</string>
+      </property>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>19</y>
+         <width>91</width>
+         <height>86</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <item>
+         <widget class="QRadioButton" name="politics_LIFO_radioButton">
+          <property name="text">
+           <string>LIFO</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="politics_FIFO_radioButton">
+          <property name="text">
+           <string>FIFO</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="politics_FAST_radioButton">
+          <property name="text">
+           <string>FAST_FIRST</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="politics_LONG_radioButton">
+          <property name="text">
+           <string>LONG_FIRST</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="save_settings_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>5</x>
+        <y>125</y>
+        <width>75</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Сохранить</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="result">
@@ -105,7 +404,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
+     <width>960</width>
      <height>22</height>
     </rect>
    </property>
@@ -129,6 +428,17 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>topology_comboBox</tabstop>
+  <tabstop>topology_Button</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
+ <slots>
+  <slot>on_click()</slot>
+ </slots>
 </ui>

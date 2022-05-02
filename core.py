@@ -4,7 +4,8 @@ from Graph import Graph
 import gc
 
 class Core:
-    def __init__(self, model):
+    def __init__(self, model, settings):
+        self.settings = settings
         self.model = model
         self.view = MainWindow(self)
         self.graph = None
