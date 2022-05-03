@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from networkx import draw, draw_networkx_labels, drawing
 
-
 class MainWindow(QMainWindow):
     def __init__(self, presenter):
         super().__init__()
@@ -114,7 +113,7 @@ class MainWindow(QMainWindow):
         self.simulation_Button = QPushButton(self.graphSettingsGroup)
         self.simulation_Button.setObjectName("simulation_Button")
         self.simulation_Button.setGeometry(QRect(10, 595, 80, 24))
-#        self.topology_Button.clicked.connect(self.createGraphClick)
+        self.simulation_Button.clicked.connect(self.simulateClick)
 
         self.label_number_failing = QLabel(self.settings)
         self.label_number_failing.setObjectName("label_number_failing")
@@ -260,6 +259,9 @@ class MainWindow(QMainWindow):
                                                            self.intensity_repair_spinBox.value(),
                                                            check)
 
+    def simulateClick(self):
+        self.presenter.handle_start_simulate_button_clicked(self.start_node_lineEdit.text(), self.end_node_lineEdit.text())
+
     def drawGraph(self, graph, labels):
         pos = drawing.spring_layout(graph)
         draw(graph, pos)
@@ -274,6 +276,11 @@ class MainWindow(QMainWindow):
         for index, node in enumerate(failure_nodes):
             self.failure_node_table.insertRow(index)
             self.failure_node_table.setItem(index, 0, QTableWidgetItem(node.name))
+
+    def output_table_edges(self, edges):
+        for index, edge in enumerate(edges):
+            self.length_connection_table.insertRow(index)
+            self.length_connection_table.setItem(index, 0, QTableWidgetItem(edge.name))
 
     def set_settings(self, settings):
         self.number_failing_spinBox.setValue(settings[0])

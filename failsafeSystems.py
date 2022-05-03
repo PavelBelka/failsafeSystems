@@ -12,7 +12,7 @@ def main():
     else:
         settings.create_settings('settings.yaml')
     app = QApplication(sys.argv)
-    presenter = Core(None, settings)
+    presenter = Core(settings)
     presenter.window_show()
     app.exec()
 

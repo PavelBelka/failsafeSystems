@@ -1,15 +1,17 @@
 import networkx as nx
 from MainWindow import MainWindow
-from Graph import Graph
+from Graph import Graph, Edge
+from simulation import Simulation
 import gc
 
 class Core:
-    def __init__(self, model, settings):
+    def __init__(self, settings):
         self.settings = settings
-        self.model = model
         self.view = MainWindow(self)
         self.view.set_settings(self.settings.get_settings())
         self.graph = None
+        self.network = None
+        self.simulate = None
 
     def window_show(self):
         self.view.show()
@@ -27,9 +29,10 @@ class Core:
             self.graph.ring_graph()
         elif topology == "Древовидное":
             self.graph.tree_graph()
-        g = nx.from_numpy_matrix(self.graph.get_matrix(), create_using=nx.MultiGraph)
-        self.view.drawGraph(g, dict_labels)
+        self.network = nx.from_numpy_matrix(self.graph.get_matrix(), create_using=nx.MultiGraph)
+        self.view.drawGraph(self.network, dict_labels)
         self.view.output_table_nodes(self.graph.get_nodes())
+        self.view.output_table_edges(self.graph.get_edges(self.network))
 
     def handle_graph_delete_button_clicked(self):
         del self.graph
@@ -38,3 +41,22 @@ class Core:
 
     def handle_save_settings_button_clicked(self, number_failure, number_repair, intensity, police_repair):
         self.settings.set_settings('settings.yaml', [number_failure, number_repair, intensity, police_repair])
+
+    def handle_start_simulate_button_clicked(self, start_node, stop_node):
+        settings = self.settings.get_settings()
+        self.simulate = Simulation(self.network, settings[0], settings[1], settings[2], settings[2])
+        del settings
+        nodes = self.graph.get_nodes()
+        node_a = None
+        node_b = None
+        list_edges = [Edge(item) for item in list(self.network.edges(data=False))]
+        for node in nodes:
+            if node.name == start_node:
+                node_a = node.index
+            elif node.name == stop_node:
+                node_b = node.index
+        self.simulate.start_simulation(node_a, node_b, list_edges, nodes)
+        del list_edges
+        del nodes
+        del self.simulate
+        gc.collect()
