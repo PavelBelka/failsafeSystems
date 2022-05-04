@@ -57,7 +57,7 @@ class Simulation:
         while is_path:
             try:
                 is_path = networkx.shortest_paths.has_path(self.graph, start_node, end_node)
-                if is_path:
+                if not is_path:
                     break
             except:
                 break
