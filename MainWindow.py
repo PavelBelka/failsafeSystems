@@ -100,11 +100,11 @@ class MainWindow(QMainWindow):
 
         self.label_intensity_connection = QLabel(self.graphSettingsGroup)
         self.label_intensity_connection.setObjectName("label_intensity_connection")
-        self.label_intensity_connection.setGeometry(QRect(10, 525, 160, 16))
+        self.label_intensity_connection.setGeometry(QRect(10, 525, 210, 16))
 
         self.intensity_connection_lineEdit = QLineEdit(self.graphSettingsGroup)
         self.intensity_connection_lineEdit.setObjectName("intensity_connection_lineEdit")
-        self.intensity_connection_lineEdit.setGeometry(QRect(175, 523, 130, 22))
+        self.intensity_connection_lineEdit.setGeometry(QRect(225, 523, 80, 22))
 
         self.is_recovery_checkBox = QCheckBox(self.graphSettingsGroup)
         self.is_recovery_checkBox.setObjectName("is_recovery_checkBox")
@@ -224,7 +224,7 @@ class MainWindow(QMainWindow):
         self.menu_add_graph.setText(QCoreApplication.translate("MainWindow", "Новый граф"))
         self.menu_delete_graph.setText(QCoreApplication.translate("MainWindow", "Удалить модель графа"))
         self.label_length_connection.setText(QCoreApplication.translate("MainWindow", "Таблица длины связей:"))
-        self.label_intensity_connection.setText(QCoreApplication.translate("MainWindow", "Интенсивность отказа связи:"))
+        self.label_intensity_connection.setText(QCoreApplication.translate("MainWindow", "Удельная интенсивность отказа связи:"))
         self.is_recovery_checkBox.setText(QCoreApplication.translate("MainWindow", "Восстановление системы"))
         self.simulation_Button.setText(QCoreApplication.translate("MainWindow", "Симмуляция"))
         self.label_number_failing.setText(QCoreApplication.translate("MainWindow", "Количество отказов в системе:", None))
@@ -260,7 +260,21 @@ class MainWindow(QMainWindow):
                                                            check)
 
     def simulateClick(self):
-        self.presenter.handle_start_simulate_button_clicked(self.start_node_lineEdit.text(), self.end_node_lineEdit.text())
+        dict_node_table = dict()
+        dict_edge_table = dict()
+        for i in range(self.failure_node_table.rowCount()):
+            try:
+                dict_node_table[self.failure_node_table.item(i,0).text()] = self.failure_node_table.item(i, 1).text()
+            except:
+                dict_node_table['err'] = 'err'
+        for i in range(self.length_connection_table.rowCount()):
+            try:
+                dict_edge_table[self.length_connection_table.item(i,0).text()] = self.length_connection_table.item(i, 1).text()
+            except:
+                dict_edge_table['err'] = 'err'
+        self.presenter.handle_start_simulate_button_clicked(self.start_node_lineEdit.text(), self.end_node_lineEdit.text(),
+                                                            dict_node_table, dict_edge_table, self.intensity_connection_lineEdit.text(),
+                                                            self.is_recovery_checkBox.isChecked())
 
     def drawGraph(self, graph, labels):
         pos = drawing.spring_layout(graph)
@@ -271,6 +285,10 @@ class MainWindow(QMainWindow):
     def clearGraph(self):
         self.fig.clf()
         self.graph_plot.draw()
+
+    def clearTables(self):
+        self.failure_node_table.setRowCount(0)
+        self.length_connection_table.setRowCount(0)
 
     def output_table_nodes(self, failure_nodes):
         for index, node in enumerate(failure_nodes):

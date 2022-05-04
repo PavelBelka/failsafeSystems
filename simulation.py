@@ -1,4 +1,6 @@
 import networkx, random, math
+from Graph import Node, Edge
+
 
 class Simulation:
     def __init__(self, graph: networkx, num_failure, num_teams, intensity_recovery, police_repair, is_repair):
@@ -51,7 +53,14 @@ class Simulation:
         list_task.append(first_failure)
 
         #Цикл пока есть путь
-        while networkx.shortest_paths.has_path(self.graph, start_node, end_node):
+        is_path = True
+        while is_path:
+            try:
+                is_path = networkx.shortest_paths.has_path(self.graph, start_node, end_node)
+                if is_path:
+                    break
+            except:
+                break
             min_element = list_task[0]
 
             #FIFO
@@ -60,9 +69,13 @@ class Simulation:
                     min_element = item
             list_task.remove(min_element)
             timestamp = min_element[0]
-            if min_element[3] == 'refusal':
+            if min_element[2] == 'refusal':
                 min_element[1].destroyed = True
                 failure = self.generate_failure(timestamp)
+                if isinstance(min_element[1], Node):
+                    self.graph_simulate.remove_node(min_element[1].index)
+                elif isinstance(min_element[1], Edge):
+                    self.graph_simulate.remove_edge(min_element[1].tuple_node[0], min_element[1].tuple_node[1])
                 list_task.append(failure)
 
                 #Чиним?
