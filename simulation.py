@@ -39,7 +39,7 @@ class Simulation:
         self.restore_state()
         if is_path:
             for i in range(self.num_failure):
-                self.graph_simulate = self.graph
+                self.graph_simulate = self.graph.copy()
                 self.restore_state()
                 state = self.system_iteration(start_node, end_node)
                 self.list_failure_times.append(state)
