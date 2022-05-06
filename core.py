@@ -1,7 +1,8 @@
 import networkx as nx
 from MainWindow import MainWindow
-from Graph import Graph
+from graph import Graph
 from simulation import Simulation
+from report import Report
 import gc
 
 class Core:
@@ -12,6 +13,7 @@ class Core:
         self.graph = None
         self.network = None
         self.simulate = None
+        self.report = Report()
 
     def window_show(self):
         self.view.show()
@@ -46,7 +48,7 @@ class Core:
 
     def handle_start_simulate_button_clicked(self, start_node, stop_node, dict_nodes, dict_edges, intensity_connection, check):
         settings = self.settings.get_settings()
-        self.simulate = Simulation(self.network, settings[0], settings[1], settings[2], settings[2], check)
+        self.simulate = Simulation(self.network, settings[0], settings[1], settings[2], settings[2], check, self.report)
         del settings
         nodes = self.graph.get_nodes()
         for node in nodes:
@@ -62,6 +64,7 @@ class Core:
             elif node.name == stop_node:
                 node_b = node.index
         self.simulate.start_simulation(node_a, node_b, list_edges, nodes)
+        self.view.output_result(self.report.get_data())
         del list_edges
         del nodes
         del self.simulate

@@ -1,15 +1,17 @@
 import networkx, random, math
-from Graph import Node, Edge
+from graph import Node, Edge
+from networkx import exception
 
 
 class Simulation:
-    def __init__(self, graph: networkx, num_failure, num_teams, intensity_recovery, police_repair, is_repair):
+    def __init__(self, graph: networkx, num_failure, num_teams, intensity_recovery, police_repair, is_repair, report):
         self.graph = graph
         self.num_failure = num_failure
         self.num_teams = num_teams
         self.intensity_recovery = intensity_recovery
         self.police_repair = police_repair
         self.is_repair = is_repair
+        self.report = report
         self.graph_simulate = None
         self.list_elements = None
         self.list_failure_times = []
@@ -41,6 +43,10 @@ class Simulation:
                 self.restore_state()
                 state = self.system_iteration(start_node, end_node)
                 self.list_failure_times.append(state)
+            self.report.calculation_min_time(self.list_failure_times)
+            self.report.calculation_max_time(self.list_failure_times)
+            self.report.calculation_average_time(self.list_failure_times)
+            self.list_failure_times = None
 
     def system_iteration(self, start_node, end_node):
         timestamp = 0.0
@@ -56,10 +62,10 @@ class Simulation:
         is_path = True
         while is_path:
             try:
-                is_path = networkx.shortest_paths.has_path(self.graph, start_node, end_node)
+                is_path = networkx.shortest_paths.has_path(self.graph_simulate, start_node, end_node)
                 if not is_path:
                     break
-            except:
+            except (exception.NodeNotFound, exception.NetworkXNoPath):
                 break
             min_element = list_task[0]
 
@@ -75,7 +81,10 @@ class Simulation:
                 if isinstance(min_element[1], Node):
                     self.graph_simulate.remove_node(min_element[1].index)
                 elif isinstance(min_element[1], Edge):
-                    self.graph_simulate.remove_edge(min_element[1].tuple_node[0], min_element[1].tuple_node[1])
+                    try:
+                        self.graph_simulate.remove_edge(min_element[1].tuple_node[0], min_element[1].tuple_node[1])
+                    except exception.NetworkXError:
+                        pass
                 list_task.append(failure)
 
                 #Чиним?

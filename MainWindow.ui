@@ -30,7 +30,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="data">
      <attribute name="title">
@@ -194,12 +194,12 @@
         <rect>
          <x>10</x>
          <y>525</y>
-         <width>160</width>
+         <width>210</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Интенсивность отказа связи:</string>
+        <string>Удельная интенсивность отказа связи:</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton">
@@ -218,9 +218,9 @@
       <widget class="QLineEdit" name="lineEdit_3">
        <property name="geometry">
         <rect>
-         <x>175</x>
+         <x>225</x>
          <y>523</y>
-         <width>130</width>
+         <width>80</width>
          <height>22</height>
         </rect>
        </property>
@@ -396,6 +396,84 @@
      <attribute name="title">
       <string>Результат</string>
      </attribute>
+     <widget class="QLabel" name="label_min_time">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>180</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Минимальное время до отказа:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_max_time">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>180</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Максимальное время до отказа:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_average_time">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>140</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Среднее время до отказа:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="min_time_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>8</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="max_time_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>38</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="average_time_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>68</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

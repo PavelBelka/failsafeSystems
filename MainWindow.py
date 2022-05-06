@@ -25,6 +25,8 @@ class MainWindow(QMainWindow):
         self.data.setObjectName("data")
         self.settings = QWidget()
         self.settings.setObjectName("settings")
+        self.result = QWidget()
+        self.result.setObjectName("result")
 
         self.graphGroup = QGroupBox(self.data)
         self.graphGroup.setObjectName("graphGroupBox")
@@ -176,10 +178,35 @@ class MainWindow(QMainWindow):
         self.save_settings_Button.setGeometry(QRect(5, 125, 75, 24))
         self.save_settings_Button.clicked.connect(self.saveSettingsClick)
 
+        self.label_min_time = QLabel(self.result)
+        self.label_min_time.setObjectName("label_min_time")
+        self.label_min_time.setGeometry(QRect(10, 10, 180, 16))
+
+        self.label_max_time = QLabel(self.result)
+        self.label_max_time.setObjectName("label_max_time")
+        self.label_max_time.setGeometry(QRect(10, 40, 180, 16))
+
+        self.label_average_time = QLabel(self.result)
+        self.label_average_time.setObjectName("label_average_time")
+        self.label_average_time.setGeometry(QRect(10, 70, 180, 16))
+
+        self.min_time_lineEdit = QLineEdit(self.result)
+        self.min_time_lineEdit.setObjectName("min_time_lineEdit")
+        self.min_time_lineEdit.setGeometry(QRect(200, 8, 150, 22))
+        self.min_time_lineEdit.setReadOnly(True)
+
+        self.max_time_lineEdit = QLineEdit(self.result)
+        self.max_time_lineEdit.setObjectName("max_time_lineEdit")
+        self.max_time_lineEdit.setGeometry(QRect(200, 38, 150, 22))
+        self.max_time_lineEdit.setReadOnly(True)
+
+        self.average_time_lineEdit = QLineEdit(self.result)
+        self.average_time_lineEdit.setObjectName("average_time_lineEdit")
+        self.average_time_lineEdit.setGeometry(QRect(200, 68, 150, 22))
+        self.average_time_lineEdit.setReadOnly(True)
+
         self.tabWidget.addTab(self.data, "")
         self.tabWidget.addTab(self.settings, "")
-        self.result = QWidget()
-        self.result.setObjectName("result")
         self.tabWidget.addTab(self.result, "")
 
         self.setCentralWidget(self.centralWidget)
@@ -236,6 +263,9 @@ class MainWindow(QMainWindow):
         self.politics_FAST_radioButton.setText(QCoreApplication.translate("MainWindow", "FAST_FIRST", None))
         self.politics_LONG_radioButton.setText(QCoreApplication.translate("MainWindow", "LONG_FIRST", None))
         self.save_settings_Button.setText(QCoreApplication.translate("MainWindow", "Сохранить", None))
+        self.label_min_time.setText(QCoreApplication.translate("MainWindow", "Минимальное время до отказа:", None))
+        self.label_max_time.setText(QCoreApplication.translate("MainWindow", "Максимальное время до отказа:", None))
+        self.label_average_time.setText(QCoreApplication.translate("MainWindow", "Среднее время до отказа:", None))
 
     def createGraphClick(self):
         choice = self.topology_comboBox.currentText()
@@ -312,3 +342,8 @@ class MainWindow(QMainWindow):
             self.politics_FAST_radioButton.setChecked(True)
         elif settings[3] == 'LONG_FIRST':
             self.politics_LONG_radioButton.setChecked(True)
+
+    def output_result(self, result):
+        self.min_time_lineEdit.setText(str(result[0]))
+        self.max_time_lineEdit.setText(str(result[1]))
+        self.average_time_lineEdit.setText(str(result[2]))
