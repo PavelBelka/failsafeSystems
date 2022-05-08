@@ -51,7 +51,6 @@ class MainWindow(QMainWindow):
         self.topology_comboBox = QComboBox(self.graphSettingsGroup)
         self.topology_comboBox.setObjectName("topology_comboBox")
         self.topology_comboBox.setGeometry(QRect(80, 18, 120, 22))
-        self.topology_comboBox.addItems(["Полносвязанная", "Ячеистая", "Звезда", "Кольцо", "Древовидное"])
 
         self.topology_Button = QPushButton(self.graphSettingsGroup)
         self.topology_Button.setObjectName("topology_Button")
@@ -305,6 +304,9 @@ class MainWindow(QMainWindow):
         self.presenter.handle_start_simulate_button_clicked(self.start_node_lineEdit.text(), self.end_node_lineEdit.text(),
                                                             dict_node_table, dict_edge_table, self.intensity_connection_lineEdit.text(),
                                                             self.is_recovery_checkBox.isChecked())
+
+    def output_list_graphs(self, graphs):
+        self.topology_comboBox.addItems(graphs)
 
     def drawGraph(self, graph, labels):
         pos = drawing.spring_layout(graph)

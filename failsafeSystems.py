@@ -5,9 +5,9 @@ from PyQt6.QtWidgets import QApplication
 from settings import Settings
 
 def main():
-    check_file = os.path.exists('settings.yaml')
+    check_file_settings = os.path.exists('settings.yaml')
     settings = Settings()
-    if check_file is True:
+    if check_file_settings is True:
         settings.read_settings('settings.yaml')
     else:
         settings.create_settings('settings.yaml')

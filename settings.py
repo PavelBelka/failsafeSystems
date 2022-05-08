@@ -8,7 +8,7 @@ class Settings:
         self.recovery_policy = 'LIFO'
 
     def read_settings(self, name_file):
-        with open(name_file) as file:
+        with open(name_file, 'r', encoding='utf-8') as file:
             read_data = yaml.load(file, Loader=yaml.FullLoader)
         self.number_network_failures = read_data['number of network failures']
         self.number_repair_teams = read_data['number of repair teams']
@@ -18,7 +18,7 @@ class Settings:
     def create_settings(self, name_file):
         data = {'number of network failures': 0, 'number of repair teams': 0, 'recovery intensity': 0.00,
                 'recovery policy': 'LIFO'}
-        with open(name_file, 'w') as file:
+        with open(name_file, 'w', encoding='utf-8') as file:
             yaml.dump(data, file)
 
 
@@ -32,5 +32,5 @@ class Settings:
         self.recovery_policy = settings[3]
         data = {'number of network failures': settings[0], 'number of repair teams': settings[1],
                 'recovery intensity': settings[2], 'recovery policy': settings[3]}
-        with open(name_file, 'w') as file:
+        with open(name_file, 'w', encoding='utf-8') as file:
             yaml.dump(data, file)

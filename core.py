@@ -1,8 +1,10 @@
 import networkx as nx
+import yaml
 from MainWindow import MainWindow
 from graph import Graph
 from simulation import Simulation
 from report import Report
+from os import path
 import gc
 
 class Core:
@@ -13,26 +15,27 @@ class Core:
         self.graph = None
         self.network = None
         self.simulate = None
+        self.graphs_data = None
         self.report = Report()
+        self.read_file_graphs()
 
     def window_show(self):
         self.view.show()
 
+    def read_file_graphs(self):
+        check_file_graphs = path.exists('graphs.yaml')
+        if check_file_graphs is True:
+            with open('graphs.yaml', 'r', encoding='utf-8') as file:
+                self.graphs_data = yaml.load(file, Loader=yaml.FullLoader)
+            self.view.output_list_graphs(list(self.graphs_data.keys()))
+        else:
+            pass
+
     def handle_graph_create_button_clicked(self, topology):
-        dict_labels = {0:'A', 1:'B', 2:'C', 3:'D', 4:'E', 5:'F', 6:'G', 7:'H', 8:'I', 9:'J'}
-        self.graph = Graph(10)
-        if topology == "Полносвязанная":
-            self.graph.fully_connected_graph()
-        elif topology == "Ячеистая":
-            self.graph.cellular_graph()
-        elif topology == "Звезда":
-            self.graph.star_graph()
-        elif topology == "Кольцо":
-            self.graph.ring_graph()
-        elif topology == "Древовидное":
-            self.graph.tree_graph()
+        self.graph = Graph(self.graphs_data[topology]['number_nodes'])
+        self.graph.build_graph(self.graphs_data[topology])
         self.network = nx.from_numpy_matrix(self.graph.get_matrix(), create_using=nx.MultiGraph)
-        self.view.drawGraph(self.network, dict_labels)
+        self.view.drawGraph(self.network, self.graph.get_labels())
         self.view.output_table_nodes(self.graph.get_nodes())
         self.view.output_table_edges(self.graph.get_edges(self.network))
 

@@ -15,9 +15,10 @@ class Edge:
         self.length = length
 
 class Graph:
-    def __init__(self, num, nodes = None):
+    def __init__(self, num, nodes = None, edges = None):
         self.matrix = np.zeros((num, num))
         self.nodes = nodes
+        self.edges = edges
         self.list_name = []
         if self.nodes is not None:
             for i in range(len(self.nodes)):
@@ -28,18 +29,10 @@ class Graph:
         for name in name_nodes:
             self.nodes.append(Node(name, name_nodes.index(name)))
 
-    def connect_dual(self, connections: dict):
-        for item in self.nodes:
-            obj = connections.get(item.name)
-            if obj is not None:
-                for i in obj:
-                    column = 0
-                    for j in self.nodes:
-                        if j.name == i:
-                            column = j.index
-                            break
-                    self.matrix[item.index][column] = 1
-                    self.matrix[column][item.index] = 1
+    def connect_dual(self):
+        for item in self.edges:
+            self.matrix[item.tuple_node[0]][item.tuple_node[1]] = 1
+            self.matrix[item.tuple_node[1]][item.tuple_node[0]] = 1
 
     def get_matrix(self):
         return self.matrix
@@ -60,73 +53,18 @@ class Graph:
             common_list.append(Edge(str_a + str_b, edge))
         return common_list
 
-    def fully_connected_graph(self):
-        self.list_name = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-        dict_edges = {
-            'A': ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
-            'B': ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
-            'C': ['A', 'B', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
-            'D': ['A', 'B', 'C', 'E', 'F', 'G', 'H', 'I', 'J'],
-            'E': ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I', 'J'],
-            'F': ['A', 'B', 'C', 'D', 'E', 'G', 'H', 'I', 'J'],
-            'G': ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'J'],
-            'H': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'I', 'J'],
-            'I': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J']
-        }
-        self.generate_nodes(self.list_name)
-        self.connect_dual(dict_edges)
+    def build_graph(self, data):
+        self.nodes = []
+        self.edges = []
+        for node in data['Nodes']:
+            self.nodes.append(Node(data['Nodes'][node]['name'], data['Nodes'][node]['index'], intensity=data['Nodes'][node]['intensity']))
+        for edge in data['Edges']:
+            self.edges.append(Edge(data['Edges'][edge]['name'], (data['Edges'][edge]['tuple_node'][0], data['Edges'][edge]['tuple_node'][1]),
+                                   length=data['Edges'][edge]['length']))
+        self.connect_dual()
 
-    def cellular_graph(self):
-        self.list_name = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-        dict_edges = {
-            'A': ['B'],
-            'B': ['C', 'D'],
-            'C': ['G'],
-            'D': ['E'],
-            'E': ['F'],
-            'F': ['B'],
-            'G': ['H'],
-            'H': ['I'],
-            'I': ['J']
-        }
-        self.generate_nodes(self.list_name)
-        self.connect_dual(dict_edges)
-
-    def star_graph(self):
-        self.list_name = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-        dict_edges = {
-            'A': ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']}
-        self.generate_nodes(self.list_name)
-        self.connect_dual(dict_edges)
-
-    def ring_graph(self):
-        self.list_name = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-        dict_edges = {
-            'A': ['B', 'J'],
-            'B': ['C'],
-            'C': ['D'],
-            'D': ['E'],
-            'E': ['F'],
-            'F': ['G'],
-            'G': ['H'],
-            'H': ['I'],
-            'I': ['J']
-        }
-        self.generate_nodes(self.list_name)
-        self.connect_dual(dict_edges)
-
-    def tree_graph(self):
-        self.list_name = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-        dict_edges = {
-            'A': ['B'],
-            'B': ['C', 'D'],
-            'C': ['G'],
-            'D': ['E'],
-            'E': ['F'],
-            'F': ['B'],
-            'G': ['H'],
-            'H': ['I'],
-            'I': ['J']
-        }
-        self.generate_nodes(self.list_name)
-        self.connect_dual(dict_edges)
+    def get_labels(self):
+        data = {}
+        for item in self.nodes:
+            data[item.index] = item.name
+        return data
