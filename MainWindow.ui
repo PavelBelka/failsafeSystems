@@ -30,7 +30,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="data">
      <attribute name="title">
@@ -328,19 +328,19 @@
         <x>305</x>
         <y>0</y>
         <width>170</width>
-        <height>115</height>
+        <height>116</height>
        </rect>
       </property>
       <property name="title">
        <string>Политика восстановления</string>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>19</y>
          <width>91</width>
-         <height>86</height>
+         <height>97</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -472,6 +472,138 @@
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_average_time_repair">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>180</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Среднее время восстановления:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="average_time_repair_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>98</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_koeff_ready">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>150</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Коэффициент готовности:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="koeff_ready_lineEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>128</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="wayGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>0</y>
+        <width>180</width>
+        <height>150</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Список путей</string>
+      </property>
+      <widget class="QPlainTextEdit" name="Way_plainTextEdit">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>20</y>
+         <width>170</width>
+         <height>124</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="failureGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>935</width>
+        <height>500</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Гистограмма времен отказов</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="charts">
+     <attribute name="title">
+      <string>Графики</string>
+     </attribute>
+     <widget class="QGroupBox" name="probabilityGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>470</width>
+        <height>250</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Верятность безотказной работы</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="chartProbabilityGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>0</y>
+        <width>470</width>
+        <height>250</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>График зависимости вероятности безотказной работы системы от времени</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="recoveryChartGroupBox">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>260</y>
+        <width>950</width>
+        <height>400</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Диаграмма восстановления</string>
       </property>
      </widget>
     </widget>

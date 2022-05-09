@@ -46,6 +46,7 @@ class Simulation:
             self.report.calculation_min_time(self.list_failure_times)
             self.report.calculation_max_time(self.list_failure_times)
             self.report.calculation_average_time(self.list_failure_times)
+            self.report.calculate_histogram(self.list_failure_times)
             self.list_failure_times = None
 
     def system_iteration(self, start_node, end_node):

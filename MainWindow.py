@@ -1,9 +1,9 @@
 from PyQt6.QtWidgets import QWidget, QTabWidget, QLabel, QPushButton, QMenuBar, QMenu, QGroupBox, QComboBox, \
     QMainWindow, QHBoxLayout, QLineEdit, QTableWidget, QTableWidgetItem, QCheckBox, QSpinBox, QDoubleSpinBox, \
-    QRadioButton, QVBoxLayout
+    QRadioButton, QVBoxLayout, QPlainTextEdit
 from PyQt6.QtCore import QRect, QCoreApplication, QMetaObject
 from PyQt6.QtGui import QAction
-import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from networkx import draw, draw_networkx_labels, drawing
 
@@ -27,14 +27,17 @@ class MainWindow(QMainWindow):
         self.settings.setObjectName("settings")
         self.result = QWidget()
         self.result.setObjectName("result")
+        self.charts = QWidget()
+        self.charts.setObjectName("charts")
 
         self.graphGroup = QGroupBox(self.data)
         self.graphGroup.setObjectName("graphGroupBox")
         self.graphGroup.setGeometry(QRect(0, 0, 625, 660))
 
-        self.fig, self.ax = plt.subplots(figsize=(5,5), dpi = 100)
-        plt.axis('off')
-        plt.subplots_adjust(left=0.01, bottom=0.01, right=0.98, top=1.0, wspace=0.1, hspace=0.1)
+        self.fig = Figure(dpi = 100)
+        self.fig.subplots_adjust(left=0.01, bottom=0.01, right=0.98, top=1.0)
+        self.axes_fig = self.fig.add_subplot(111)
+        self.axes_fig.axis('off')
         self.graph_plot = FigureCanvasQTAgg(self.fig)
         self.vbox = QHBoxLayout()
         self.vbox.addWidget(self.graph_plot)
@@ -204,9 +207,85 @@ class MainWindow(QMainWindow):
         self.average_time_lineEdit.setGeometry(QRect(200, 68, 150, 22))
         self.average_time_lineEdit.setReadOnly(True)
 
+        self.label_average_time_repair = QLabel(self.result)
+        self.label_average_time_repair.setObjectName("label_average_time_repair")
+        self.label_average_time_repair.setGeometry(QRect(10, 100, 180, 16))
+
+        self.average_time_repair_lineEdit = QLineEdit(self.result)
+        self.average_time_repair_lineEdit.setObjectName("average_time_repair_lineEdit")
+        self.average_time_repair_lineEdit.setGeometry(QRect(200, 98, 150, 22))
+        self.average_time_repair_lineEdit.setReadOnly(True)
+
+        self.label_koeff_ready = QLabel(self.result)
+        self.label_koeff_ready.setObjectName("label_koeff_ready")
+        self.label_koeff_ready.setGeometry(QRect(10, 130, 150, 16))
+
+        self.koeff_ready_lineEdit = QLineEdit(self.result)
+        self.koeff_ready_lineEdit.setObjectName("koeff_ready_lineEdit")
+        self.koeff_ready_lineEdit.setGeometry(QRect(200, 128, 150, 22))
+        self.koeff_ready_lineEdit.setReadOnly(True)
+
+        self.wayGroupBox = QGroupBox(self.result)
+        self.wayGroupBox.setObjectName("wayGroupBox")
+        self.wayGroupBox.setGeometry(QRect(370, 0, 180, 150))
+
+        self.failureGroupBox = QGroupBox(self.result)
+        self.failureGroupBox.setObjectName("failureGroupBox")
+        self.failureGroupBox.setGeometry(QRect(10, 160, 935, 500))
+
+        self.fig_failure = Figure(dpi = 100)
+        self.fig_failure.subplots_adjust(left=0.05, bottom=0.05, right=0.98, top=0.97)
+        self.axes_failure = self.fig_failure.add_subplot(111)
+        self.failure_plot = FigureCanvasQTAgg(self.fig_failure)
+        self.vbox_failure = QHBoxLayout()
+        self.vbox_failure.addWidget(self.failure_plot)
+        self.failureGroupBox.setLayout(self.vbox_failure)
+
+        self.way_plainTextEdit = QPlainTextEdit(self.wayGroupBox)
+        self.way_plainTextEdit.setObjectName("way_plainTextEdit")
+        self.way_plainTextEdit.setGeometry(QRect(5, 20, 170, 124))
+        self.way_plainTextEdit.setReadOnly(True)
+
+        self.probabilityGroupBox = QGroupBox(self.charts)
+        self.probabilityGroupBox.setObjectName("probabilityGroupBox")
+        self.probabilityGroupBox.setGeometry(QRect(0, 0, 470, 270))
+
+        self.fig_probability = Figure(dpi = 100)
+        self.fig_probability.subplots_adjust(left=0.07, bottom=0.1, right=0.98, top=0.98)
+        self.axes_probability = self.fig_probability.add_subplot(111)
+        self.probability_plot = FigureCanvasQTAgg(self.fig_probability)
+        self.vbox_probability = QHBoxLayout()
+        self.vbox_probability.addWidget(self.probability_plot)
+        self.probabilityGroupBox.setLayout(self.vbox_probability)
+
+        self.chartProbabilityGroupBox = QGroupBox(self.charts)
+        self.chartProbabilityGroupBox.setObjectName("chartProbabilityGroupBox")
+        self.chartProbabilityGroupBox.setGeometry(QRect(480, 0, 470, 270))
+
+        self.fig_chartProbability = Figure(dpi = 100)
+        self.fig_chartProbability.subplots_adjust(left=0.07, bottom=0.1, right=0.98, top=0.98)
+        self.axes_chartProbability = self.fig_chartProbability.add_subplot(111)
+        self.chartProbability_plot = FigureCanvasQTAgg(self.fig_chartProbability)
+        self.vbox_chartProbability = QHBoxLayout()
+        self.vbox_chartProbability.addWidget(self.chartProbability_plot)
+        self.chartProbabilityGroupBox.setLayout(self.vbox_chartProbability)
+
+        self.recoveryChartGroupBox = QGroupBox(self.charts)
+        self.recoveryChartGroupBox.setObjectName("recoveryChartGroupBox")
+        self.recoveryChartGroupBox.setGeometry(QRect(0, 270, 950, 390))
+
+        self.fig_recoveryChart = Figure(dpi = 100)
+        self.fig_recoveryChart.subplots_adjust(left=0.04, bottom=0.07, right=0.98, top=0.98)
+        self.axes_recoveryChart = self.fig_recoveryChart.add_subplot(111)
+        self.recoveryChart_plot = FigureCanvasQTAgg(self.fig_recoveryChart)
+        self.vbox_recoveryChart = QHBoxLayout()
+        self.vbox_recoveryChart.addWidget(self.recoveryChart_plot)
+        self.recoveryChartGroupBox.setLayout(self.vbox_recoveryChart)
+
         self.tabWidget.addTab(self.data, "")
         self.tabWidget.addTab(self.settings, "")
         self.tabWidget.addTab(self.result, "")
+        self.tabWidget.addTab(self.charts, "")
 
         self.setCentralWidget(self.centralWidget)
 
@@ -246,9 +325,10 @@ class MainWindow(QMainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.data), QCoreApplication.translate("MainWindow", "Данные", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), QCoreApplication.translate("MainWindow", "Доп. настройки", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.result), QCoreApplication.translate("MainWindow", "Результат", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.charts), QCoreApplication.translate("MainWindow", "Графики", None))
         self.menuGraph.setTitle(QCoreApplication.translate("MainWindow", "Граф", None))
         self.menu_add_graph.setText(QCoreApplication.translate("MainWindow", "Новый граф"))
-        self.menu_delete_graph.setText(QCoreApplication.translate("MainWindow", "Удалить модель графа"))
+        self.menu_delete_graph.setText(QCoreApplication.translate("MainWindow", "Удалить граф"))
         self.label_length_connection.setText(QCoreApplication.translate("MainWindow", "Таблица длины связей:"))
         self.label_intensity_connection.setText(QCoreApplication.translate("MainWindow", "Удельная интенсивность отказа связи:"))
         self.is_recovery_checkBox.setText(QCoreApplication.translate("MainWindow", "Восстановление системы"))
@@ -265,6 +345,13 @@ class MainWindow(QMainWindow):
         self.label_min_time.setText(QCoreApplication.translate("MainWindow", "Минимальное время до отказа:", None))
         self.label_max_time.setText(QCoreApplication.translate("MainWindow", "Максимальное время до отказа:", None))
         self.label_average_time.setText(QCoreApplication.translate("MainWindow", "Среднее время до отказа:", None))
+        self.label_average_time_repair.setText(QCoreApplication.translate("MainWindow", "Среднее время восстановления:", None))
+        self.label_koeff_ready.setText(QCoreApplication.translate("MainWindow", "Коэффициент готовности:", None))
+        self.wayGroupBox.setTitle(QCoreApplication.translate("MainWindow", "Список путей", None))
+        self.failureGroupBox.setTitle(QCoreApplication.translate("MainWindow", "Гистограмма времен отказов", None))
+        self.probabilityGroupBox.setTitle(QCoreApplication.translate("MainWindow", "Вероятность безотказной работы", None))
+        self.chartProbabilityGroupBox.setTitle(QCoreApplication.translate("MainWindow", "График зависимости вероятности безотказной работы системы от времени", None))
+        self.recoveryChartGroupBox.setTitle(QCoreApplication.translate("MainWindow", "Диаграмма восстановления", None))
 
     def createGraphClick(self):
         choice = self.topology_comboBox.currentText()
@@ -310,13 +397,22 @@ class MainWindow(QMainWindow):
 
     def drawGraph(self, graph, labels):
         pos = drawing.spring_layout(graph)
-        draw(graph, pos)
-        draw_networkx_labels(graph, pos, labels=labels)
+        draw(graph, pos, self.axes_fig)
+        draw_networkx_labels(graph, pos, labels=labels, ax=self.axes_fig)
         self.graph_plot.draw()
 
-    def clearGraph(self):
-        self.fig.clf()
+    def clearChats(self):
+        self.axes_fig.cla()
+        self.axes_fig.axis('off')
+        self.axes_failure.cla()
+        self.axes_probability.cla()
+        self.axes_recoveryChart.cla()
+        self.axes_chartProbability.cla()
         self.graph_plot.draw()
+        self.failure_plot.draw()
+        self.probability_plot.draw()
+        self.recoveryChart_plot.draw()
+        self.chartProbability_plot.draw()
 
     def clearTables(self):
         self.failure_node_table.setRowCount(0)
@@ -351,3 +447,8 @@ class MainWindow(QMainWindow):
         self.min_time_lineEdit.setText(str(result[0]))
         self.max_time_lineEdit.setText(str(result[1]))
         self.average_time_lineEdit.setText(str(result[2]))
+
+    def output_histogram(self, histogram_failure):
+        width = 0.7 * (histogram_failure[1][1] - histogram_failure[1][0])
+        self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0], width=width)
+        self.failure_plot.draw()

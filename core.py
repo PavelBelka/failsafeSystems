@@ -40,10 +40,11 @@ class Core:
         self.view.output_table_edges(self.graph.get_edges())
 
     def handle_graph_delete_button_clicked(self):
-        self.view.clearGraph()
+        self.view.clearChats()
         self.view.clearTables()
         del self.graph
         del self.network
+        del self.simulate
         gc.collect()
 
     def handle_save_settings_button_clicked(self, number_failure, number_repair, intensity, police_repair):
@@ -55,20 +56,21 @@ class Core:
         del settings
         nodes = self.graph.get_nodes()
         for node in nodes:
-            node.intensity = float(dict_nodes[node.name])
+            node.intensity = float(dict_nodes[node.name]) * 1e-6
         node_a = None
         node_b = None
-        list_edges = self.graph.get_edges(self.network)
-        for edge in list_edges:
-            edge.intensity = float(dict_edges[edge.name]) * float(intensity_connection)
+        edges = self.graph.get_edges()
+        for edge in edges:
+            edge.intensity = float(dict_edges[edge.name]) * float(intensity_connection) * 1e-6
         for node in nodes:
             if node.name == start_node:
                 node_a = node.index
             elif node.name == stop_node:
                 node_b = node.index
-        self.simulate.start_simulation(node_a, node_b, list_edges, nodes)
-        self.view.output_result(self.report.get_data())
-        del list_edges
+        self.simulate.start_simulation(node_a, node_b, edges, nodes)
+        self.view.output_result(self.report.get_data_result())
+        self.view.output_histogram(self.report.get_histogram_failure())
+        del edges
         del nodes
         del self.simulate
         gc.collect()
