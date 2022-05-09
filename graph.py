@@ -1,9 +1,9 @@
 import numpy as np
 
 class Node:
-    def __init__(self, name, indexloc = None, destroyed = False, intensity = 0):
+    def __init__(self, name, index = None, destroyed = False, intensity = 0):
         self.name = name
-        self.index = indexloc
+        self.index = index
         self.destroyed = destroyed
         self.intensity = intensity
 
@@ -40,18 +40,8 @@ class Graph:
     def get_nodes(self):
         return self.nodes
 
-    def get_edges(self, network):
-        common_list = []
-        str_a = ''
-        str_b = ''
-        for edge in list(network.edges(data=False)):
-            for node in self.nodes:
-                if node.index == edge[0]:
-                    str_a = node.name
-                elif node.index == edge[1]:
-                    str_b = node.name
-            common_list.append(Edge(str_a + str_b, edge))
-        return common_list
+    def get_edges(self):
+        return self.edges
 
     def build_graph(self, data):
         self.nodes = []

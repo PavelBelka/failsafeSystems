@@ -20,7 +20,7 @@
         - 2
         - 3
     3:
-      length: 5
+      length: 5.0
       name: DE
       tuple_node:
         - 3
@@ -119,7 +119,7 @@
         - 0
         - 3
     3:
-      length: 5
+      length: 5.0
       name: AE
       tuple_node:
         - 0
@@ -218,7 +218,7 @@
         - 0
         - 3
     3:
-      length: 5
+      length: 5.0
       name: AE
       tuple_node:
         - 0
@@ -527,7 +527,7 @@
         - 2
         - 3
     3:
-      length: 5
+      length: 5.0
       name: DE
       tuple_node:
         - 3
@@ -632,7 +632,7 @@
         - 1
         - 3
     3:
-      length: 5
+      length: 5.0
       name: CG
       tuple_node:
         - 3

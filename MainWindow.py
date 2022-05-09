@@ -326,11 +326,13 @@ class MainWindow(QMainWindow):
         for index, node in enumerate(failure_nodes):
             self.failure_node_table.insertRow(index)
             self.failure_node_table.setItem(index, 0, QTableWidgetItem(node.name))
+            self.failure_node_table.setItem(index, 1, QTableWidgetItem(str(node.intensity)))
 
     def output_table_edges(self, edges):
         for index, edge in enumerate(edges):
             self.length_connection_table.insertRow(index)
             self.length_connection_table.setItem(index, 0, QTableWidgetItem(edge.name))
+            self.length_connection_table.setItem(index, 1, QTableWidgetItem(str(edge.length)))
 
     def set_settings(self, settings):
         self.number_failing_spinBox.setValue(settings[0])

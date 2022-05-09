@@ -37,7 +37,7 @@ class Core:
         self.network = nx.from_numpy_matrix(self.graph.get_matrix(), create_using=nx.MultiGraph)
         self.view.drawGraph(self.network, self.graph.get_labels())
         self.view.output_table_nodes(self.graph.get_nodes())
-        self.view.output_table_edges(self.graph.get_edges(self.network))
+        self.view.output_table_edges(self.graph.get_edges())
 
     def handle_graph_delete_button_clicked(self):
         self.view.clearGraph()
