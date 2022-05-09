@@ -58,3 +58,4 @@ class Graph:
         for item in self.nodes:
             data[item.index] = item.name
         return data
+

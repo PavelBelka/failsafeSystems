@@ -67,10 +67,11 @@ class Core:
                 node_a = node.index
             elif node.name == stop_node:
                 node_b = node.index
+        paths = list(nx.all_simple_paths(self.network, node_a, node_b))
         self.simulate.start_simulation(node_a, node_b, edges, nodes)
+        self.view.output_all_paths(paths, self.graph.get_labels())
         self.view.output_result(self.report.get_data_result())
         self.view.output_histogram(self.report.get_histogram_failure())
-        del edges
-        del nodes
+        del paths, edges, nodes
         del self.simulate
         gc.collect()

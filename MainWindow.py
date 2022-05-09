@@ -227,7 +227,7 @@ class MainWindow(QMainWindow):
 
         self.wayGroupBox = QGroupBox(self.result)
         self.wayGroupBox.setObjectName("wayGroupBox")
-        self.wayGroupBox.setGeometry(QRect(370, 0, 180, 150))
+        self.wayGroupBox.setGeometry(QRect(370, 0, 280, 150))
 
         self.failureGroupBox = QGroupBox(self.result)
         self.failureGroupBox.setObjectName("failureGroupBox")
@@ -243,7 +243,7 @@ class MainWindow(QMainWindow):
 
         self.way_plainTextEdit = QPlainTextEdit(self.wayGroupBox)
         self.way_plainTextEdit.setObjectName("way_plainTextEdit")
-        self.way_plainTextEdit.setGeometry(QRect(5, 20, 170, 124))
+        self.way_plainTextEdit.setGeometry(QRect(5, 20, 270, 124))
         self.way_plainTextEdit.setReadOnly(True)
 
         self.probabilityGroupBox = QGroupBox(self.charts)
@@ -452,3 +452,14 @@ class MainWindow(QMainWindow):
         width = 0.7 * (histogram_failure[1][1] - histogram_failure[1][0])
         self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0], width=width)
         self.failure_plot.draw()
+
+    def output_all_paths(self, path, labels):
+        for item in path:
+            string = ''
+            length = len(item) - 1
+            for number in item:
+                if item.index(number) == length:
+                    string = string + labels[number]
+                else:
+                    string = string + f"{labels[number]} -> "
+            self.way_plainTextEdit.appendPlainText(string)
