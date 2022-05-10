@@ -8,11 +8,12 @@ class Node:
         self.intensity = intensity
 
 class Edge:
-    def __init__(self, name, tuple_node, destroyed = False, length = 0):
+    def __init__(self, name, tuple_node, destroyed = False, length = 0, intensity = 0):
         self.name = name
         self.tuple_node = tuple_node
         self.destroyed = destroyed
         self.length = length
+        self.intensity = intensity
 
 class Graph:
     def __init__(self, num, nodes = None, edges = None):
@@ -59,3 +60,27 @@ class Graph:
             data[item.index] = item.name
         return data
 
+    def get_path_elements(self, paths):
+        common_list = []
+        for path in paths:
+            path_list = []
+            for item in path:
+                element_list = [0, 0.0]
+                index_path = path.index(item)
+                element_list[0] = str(item)
+                for node in self.nodes:
+                    if node.index == item:
+                        element_list[1] = node.intensity
+                path_list.append(element_list.copy())
+                if index_path == 0:
+                    continue
+                else:
+                    node_a = path[index_path - 1]
+                    node_b = path[index_path]
+                    for edge in self.edges:
+                        if (edge.tuple_node[0] == node_a and edge.tuple_node[1] == node_b) or \
+                           (edge.tuple_node[1] == node_a and edge.tuple_node[0] == node_b):
+                            path_list.insert(path_list.index(path_list[-1]), [f'{edge.tuple_node[0]}{edge.tuple_node[1]}', edge.intensity])
+                            break
+            common_list.append(path_list)
+        return common_list

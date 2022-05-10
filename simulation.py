@@ -97,7 +97,7 @@ class Simulation:
         total = 0.0
         sums = 0
         element_fail = None
-        list_conditional_intensities = []
+#        list_conditional_intensities = []
         for element in self.list_elements:
             if not element.destroyed:
                 total = total + element.intensity

@@ -15,7 +15,8 @@ class Settings:
         self.recovery_intensity = read_data['recovery intensity']
         self.recovery_policy = read_data['recovery policy']
 
-    def create_settings(self, name_file):
+    @staticmethod
+    def create_settings(name_file):
         data = {'number of network failures': 0, 'number of repair teams': 0, 'recovery intensity': 0.00,
                 'recovery policy': 'LIFO'}
         with open(name_file, 'w', encoding='utf-8') as file:

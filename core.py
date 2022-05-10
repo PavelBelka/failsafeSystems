@@ -68,7 +68,9 @@ class Core:
             elif node.name == stop_node:
                 node_b = node.index
         paths = list(nx.all_simple_paths(self.network, node_a, node_b))
+        data = self.graph.get_path_elements(paths)
         self.simulate.start_simulation(node_a, node_b, edges, nodes)
+        self.view.output_probability_chart(self.report.output_probability(data))
         self.view.output_all_paths(paths, self.graph.get_labels())
         self.view.output_result(self.report.get_data_result())
         self.view.output_histogram(self.report.get_histogram_failure())

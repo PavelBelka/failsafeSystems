@@ -1,4 +1,5 @@
 import numpy
+import numpy as np
 from numpy import average, max, min
 
 class Report:
@@ -36,3 +37,27 @@ class Report:
 
     def get_histogram_failure(self):
         return self.histogram_failure
+
+    @staticmethod
+    def calculate_graph_probability(list_data):
+        common_multiply = 1.0
+        for probability in list_data[1]:
+            object_probability = np.subtract(1, np.exp(np.multiply(-probability, list_data[0])))
+            common_multiply = np.multiply(common_multiply, object_probability)
+        common_probability = np.subtract(1, common_multiply)
+        return common_probability
+
+
+    def output_probability(self, data):
+        common_list = []
+        probability_list = []
+        x = np.linspace(0, self.max_time + 1, 100)
+        common_list.append(x)
+        for item in data:
+            sum_prob = 0
+            for obj in item:
+                sum_prob = sum_prob + obj[1]
+            probability_list.append(sum_prob)
+        common_list.append(probability_list)
+        result = self.calculate_graph_probability(common_list)
+        return [result, x]

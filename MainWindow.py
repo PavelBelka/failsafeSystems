@@ -234,7 +234,7 @@ class MainWindow(QMainWindow):
         self.failureGroupBox.setGeometry(QRect(10, 160, 935, 500))
 
         self.fig_failure = Figure(dpi = 100)
-        self.fig_failure.subplots_adjust(left=0.05, bottom=0.05, right=0.98, top=0.97)
+        self.fig_failure.subplots_adjust(left=0.05, bottom=0.1, right=0.98, top=0.97)
         self.axes_failure = self.fig_failure.add_subplot(111)
         self.failure_plot = FigureCanvasQTAgg(self.fig_failure)
         self.vbox_failure = QHBoxLayout()
@@ -248,22 +248,19 @@ class MainWindow(QMainWindow):
 
         self.probabilityGroupBox = QGroupBox(self.charts)
         self.probabilityGroupBox.setObjectName("probabilityGroupBox")
-        self.probabilityGroupBox.setGeometry(QRect(0, 0, 470, 270))
+        self.probabilityGroupBox.setGeometry(QRect(0, 0, 370, 270))
 
-        self.fig_probability = Figure(dpi = 100)
-        self.fig_probability.subplots_adjust(left=0.07, bottom=0.1, right=0.98, top=0.98)
-        self.axes_probability = self.fig_probability.add_subplot(111)
-        self.probability_plot = FigureCanvasQTAgg(self.fig_probability)
-        self.vbox_probability = QHBoxLayout()
-        self.vbox_probability.addWidget(self.probability_plot)
-        self.probabilityGroupBox.setLayout(self.vbox_probability)
+        self.probability_plainTextEdit = QPlainTextEdit(self.probabilityGroupBox)
+        self.probability_plainTextEdit.setObjectName("probability_plainTextEdit")
+        self.probability_plainTextEdit.setGeometry(QRect(5, 20, 360, 240))
+        self.probability_plainTextEdit.setReadOnly(True)
 
         self.chartProbabilityGroupBox = QGroupBox(self.charts)
         self.chartProbabilityGroupBox.setObjectName("chartProbabilityGroupBox")
-        self.chartProbabilityGroupBox.setGeometry(QRect(480, 0, 470, 270))
+        self.chartProbabilityGroupBox.setGeometry(QRect(380, 0, 570, 270))
 
         self.fig_chartProbability = Figure(dpi = 100)
-        self.fig_chartProbability.subplots_adjust(left=0.07, bottom=0.1, right=0.98, top=0.98)
+        self.fig_chartProbability.subplots_adjust(left=0.07, bottom=0.18, right=0.98, top=0.98)
         self.axes_chartProbability = self.fig_chartProbability.add_subplot(111)
         self.chartProbability_plot = FigureCanvasQTAgg(self.fig_chartProbability)
         self.vbox_chartProbability = QHBoxLayout()
@@ -405,12 +402,10 @@ class MainWindow(QMainWindow):
         self.axes_fig.cla()
         self.axes_fig.axis('off')
         self.axes_failure.cla()
-        self.axes_probability.cla()
         self.axes_recoveryChart.cla()
         self.axes_chartProbability.cla()
         self.graph_plot.draw()
         self.failure_plot.draw()
-        self.probability_plot.draw()
         self.recoveryChart_plot.draw()
         self.chartProbability_plot.draw()
 
@@ -463,3 +458,6 @@ class MainWindow(QMainWindow):
                 else:
                     string = string + f"{labels[number]} -> "
             self.way_plainTextEdit.appendPlainText(string)
+
+    def output_probability_chart(self, data):
+        self.axes_chartProbability.plot(data[1], data[0], 'r')
