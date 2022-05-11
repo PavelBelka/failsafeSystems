@@ -72,7 +72,9 @@ class Core:
         self.simulate.start_simulation(node_a, node_b, edges, nodes)
         self.view.output_all_paths(paths, self.graph.get_labels())
         self.view.output_result(self.report.get_data_result())
-        self.view.output_histogram(self.report.get_histogram_failure())
+        self.view.output_histogram(self.report.get_histogram_failure(), False)
+        if check:
+            self.view.output_histogram(self.report.get_histogram_repair(), True)
         self.view.output_probability_chart(self.report.output_probability(data))
         self.view.output_probability_formula(data)
         del paths, edges, nodes

@@ -276,7 +276,7 @@ class MainWindow(QMainWindow):
         self.recoveryChartGroupBox.setGeometry(QRect(0, 270, 950, 390))
 
         self.fig_recoveryChart = Figure(dpi = 100)
-        self.fig_recoveryChart.subplots_adjust(left=0.04, bottom=0.07, right=0.98, top=0.98)
+        self.fig_recoveryChart.subplots_adjust(left=0.06, bottom=0.07, right=0.98, top=0.98)
         self.axes_recoveryChart = self.fig_recoveryChart.add_subplot(111)
         self.recoveryChart_plot = FigureCanvasQTAgg(self.fig_recoveryChart)
         self.vbox_recoveryChart = QHBoxLayout()
@@ -450,10 +450,16 @@ class MainWindow(QMainWindow):
             self.average_time_repair_lineEdit.setText(str(result[3]))
             self.koeff_ready_lineEdit.setText(str(result[4]))
 
-    def output_histogram(self, histogram_failure):
+    def output_histogram(self, histogram_failure, is_repair):
         width = 0.7 * (histogram_failure[1][1] - histogram_failure[1][0])
-        self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0], width=width)
-        self.failure_plot.draw()
+        if not is_repair:
+            self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
+                                  width=width)
+            self.failure_plot.draw()
+        else:
+            self.axes_recoveryChart.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
+                                  width=width)
+            self.recoveryChart_plot.draw()
 
     def output_all_paths(self, path, labels):
         for item in path:
