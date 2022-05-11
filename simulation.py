@@ -2,6 +2,8 @@ import networkx, random, math
 from graph import Node, Edge
 from networkx import exception
 
+from repair import Repair
+
 
 class Simulation:
     def __init__(self, graph: networkx, num_failure, num_teams, intensity_recovery, police_repair, is_repair, report):
@@ -15,6 +17,7 @@ class Simulation:
         self.graph_simulate = None
         self.list_elements = None
         self.list_failure_times = []
+        self.list_repair_times = []
 
     def get_all_elements(self, list_edges, list_nodes):
         common_list = []
@@ -42,16 +45,26 @@ class Simulation:
                 self.graph_simulate = self.graph.copy()
                 self.restore_state()
                 state = self.system_iteration(start_node, end_node)
-                self.list_failure_times.append(state)
+                self.list_failure_times.append(state[0])
+                if self.is_repair:
+                    self.list_repair_times.extend(state[1])
             self.report.calculation_min_time(self.list_failure_times)
             self.report.calculation_max_time(self.list_failure_times)
             self.report.calculation_average_time(self.list_failure_times)
+            if self.is_repair:
+                self.report.calculation_average_time_repair(self.list_repair_times)
+                self.report.calculation_coefficient_ready()
+                self.report.calculate_histogram(self.list_repair_times, repair=True)
             self.report.calculate_histogram(self.list_failure_times)
             self.list_failure_times = None
+            self.list_repair_times = None
 
     def system_iteration(self, start_node, end_node):
         timestamp = 0.0
         list_task = []
+        list_repair_time = []
+        repair_tasks = Repair(self.police_repair)
+        recovery_team = self.num_teams
 
         #Первый отказ
         first_failure = self.generate_failure(timestamp)
@@ -90,8 +103,34 @@ class Simulation:
 
                 #Чиним?
                 if self.is_repair:
-                    pass
-        return [timestamp]
+                    repair_tasks.add_task([min_element[1],
+                                           min_element[0],
+                                           -1 * math.log(random.random()) / self.intensity_recovery])
+            elif min_element[2] == 'restore':
+                min_element[1].destroyed = False
+                recovery_team += 1
+                self.restore_graph(min_element[1])
+
+            #Починка элемента
+            while recovery_team > 0 and not repair_tasks.check_empty_queue() and self.is_repair:
+                task = repair_tasks.get_task()
+                list_task.append([task[2] + timestamp, task[0], 'restore'])
+                recovery_team -= 1
+                list_repair_time.append(task[2])
+        return [timestamp, list_repair_time]
+
+    def restore_graph(self, element):
+        if isinstance(element, Node):
+            self.graph_simulate.add_node(element.index)
+            for item in self.list_elements:
+                if isinstance(item, Edge):
+                    if item.tuple_node[0] == element.index or item.tuple_node[1] == element.index:
+                        self.graph_simulate.add_edge(item.tuple_node[0], item.tuple_node[1])
+        elif isinstance(element, Edge):
+            try:
+                self.graph_simulate.add_edge(element.tuple_node[0], element.tuple_node[1])
+            except exception.NetworkXError:
+                pass
 
     def generate_failure(self, timestamp):
         total = 0.0

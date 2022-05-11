@@ -531,7 +531,7 @@
        <rect>
         <x>370</x>
         <y>0</y>
-        <width>180</width>
+        <width>280</width>
         <height>150</height>
        </rect>
       </property>
@@ -543,7 +543,7 @@
         <rect>
          <x>5</x>
          <y>20</y>
-         <width>170</width>
+         <width>270</width>
          <height>124</height>
         </rect>
        </property>
@@ -572,21 +572,31 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>470</width>
-        <height>250</height>
+        <width>370</width>
+        <height>270</height>
        </rect>
       </property>
       <property name="title">
        <string>Верятность безотказной работы</string>
       </property>
+      <widget class="QPlainTextEdit" name="probability_plainTextEdit">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>20</y>
+         <width>360</width>
+         <height>240</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="chartProbabilityGroupBox">
       <property name="geometry">
        <rect>
-        <x>480</x>
+        <x>380</x>
         <y>0</y>
-        <width>470</width>
-        <height>250</height>
+        <width>570</width>
+        <height>270</height>
        </rect>
       </property>
       <property name="title">
@@ -597,9 +607,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>260</y>
+        <y>270</y>
         <width>950</width>
-        <height>400</height>
+        <height>390</height>
        </rect>
       </property>
       <property name="title">

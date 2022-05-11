@@ -1,4 +1,4 @@
 number of network failures: 5000
-number of repair teams: 0
-recovery intensity: 0.0
-recovery policy: LIFO
+number of repair teams: 1
+recovery intensity: 0.01
+recovery policy: FIFO

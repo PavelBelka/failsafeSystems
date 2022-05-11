@@ -52,7 +52,7 @@ class Core:
 
     def handle_start_simulate_button_clicked(self, start_node, stop_node, dict_nodes, dict_edges, intensity_connection, check):
         settings = self.settings.get_settings()
-        self.simulate = Simulation(self.network, settings[0], settings[1], settings[2], settings[2], check, self.report)
+        self.simulate = Simulation(self.network, settings[0], settings[1], settings[2], settings[3], check, self.report)
         del settings
         nodes = self.graph.get_nodes()
         for node in nodes:
@@ -70,10 +70,11 @@ class Core:
         paths = list(nx.all_simple_paths(self.network, node_a, node_b))
         data = self.graph.get_path_elements(paths)
         self.simulate.start_simulation(node_a, node_b, edges, nodes)
-        self.view.output_probability_chart(self.report.output_probability(data))
         self.view.output_all_paths(paths, self.graph.get_labels())
         self.view.output_result(self.report.get_data_result())
         self.view.output_histogram(self.report.get_histogram_failure())
+        self.view.output_probability_chart(self.report.output_probability(data))
+        self.view.output_probability_formula(data)
         del paths, edges, nodes
         del self.simulate
         gc.collect()

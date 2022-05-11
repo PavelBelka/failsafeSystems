@@ -234,8 +234,10 @@ class MainWindow(QMainWindow):
         self.failureGroupBox.setGeometry(QRect(10, 160, 935, 500))
 
         self.fig_failure = Figure(dpi = 100)
-        self.fig_failure.subplots_adjust(left=0.05, bottom=0.1, right=0.98, top=0.97)
+        self.fig_failure.subplots_adjust(left=0.08, bottom=0.1, right=0.98, top=0.97)
         self.axes_failure = self.fig_failure.add_subplot(111)
+        self.axes_failure.set_xlabel('Время работы сети в часах')
+        self.axes_failure.set_ylabel('Количество')
         self.failure_plot = FigureCanvasQTAgg(self.fig_failure)
         self.vbox_failure = QHBoxLayout()
         self.vbox_failure.addWidget(self.failure_plot)
@@ -260,8 +262,10 @@ class MainWindow(QMainWindow):
         self.chartProbabilityGroupBox.setGeometry(QRect(380, 0, 570, 270))
 
         self.fig_chartProbability = Figure(dpi = 100)
-        self.fig_chartProbability.subplots_adjust(left=0.07, bottom=0.18, right=0.98, top=0.98)
+        self.fig_chartProbability.subplots_adjust(left=0.1, bottom=0.2, right=0.98, top=0.98)
         self.axes_chartProbability = self.fig_chartProbability.add_subplot(111)
+        self.axes_chartProbability.set_xlabel('Время работы сети в часах')
+        self.axes_chartProbability.set_ylabel('Вероятность отказа')
         self.chartProbability_plot = FigureCanvasQTAgg(self.fig_chartProbability)
         self.vbox_chartProbability = QHBoxLayout()
         self.vbox_chartProbability.addWidget(self.chartProbability_plot)
@@ -442,6 +446,9 @@ class MainWindow(QMainWindow):
         self.min_time_lineEdit.setText(str(result[0]))
         self.max_time_lineEdit.setText(str(result[1]))
         self.average_time_lineEdit.setText(str(result[2]))
+        if result[3] is not None and result[4] is not None:
+            self.average_time_repair_lineEdit.setText(str(result[3]))
+            self.koeff_ready_lineEdit.setText(str(result[4]))
 
     def output_histogram(self, histogram_failure):
         width = 0.7 * (histogram_failure[1][1] - histogram_failure[1][0])
@@ -461,3 +468,25 @@ class MainWindow(QMainWindow):
 
     def output_probability_chart(self, data):
         self.axes_chartProbability.plot(data[1], data[0], 'r')
+
+    def output_probability_formula(self, data):
+        common_formula_string = "P(t) = 1 - "
+        for item in data:
+            formula_string = f"P{data.index(item)}(t) = e^-("
+            local_formula_string = "(1 - e^-("
+            object_string = ""
+            for obj in item:
+                index_obg = item.index(obj)
+                if index_obg is not item.index(item[-1]):
+                    object_string += u"\u03BB" + obj[0] + "+"
+                else:
+                    object_string += u"\u03BB" + obj[0] + ") * t"
+            formula_string += object_string
+            local_formula_string += object_string
+            if data.index(item) is data.index(data[-1]):
+                local_formula_string += ") "
+            else:
+                local_formula_string += ") * "
+            common_formula_string += local_formula_string
+            self.probability_plainTextEdit.appendPlainText(formula_string)
+        self.probability_plainTextEdit.appendPlainText(common_formula_string)
