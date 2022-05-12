@@ -412,6 +412,8 @@ class MainWindow(QMainWindow):
         self.failure_plot.draw()
         self.recoveryChart_plot.draw()
         self.chartProbability_plot.draw()
+        self.way_plainTextEdit.clear()
+        self.probability_plainTextEdit.clear()
 
     def clearTables(self):
         self.failure_node_table.setRowCount(0)
@@ -453,15 +455,18 @@ class MainWindow(QMainWindow):
     def output_histogram(self, histogram_failure, is_repair):
         width = 0.7 * (histogram_failure[1][1] - histogram_failure[1][0])
         if not is_repair:
+            self.axes_failure.cla()
             self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
                                   width=width)
             self.failure_plot.draw()
         else:
+            self.axes_recoveryChart.cla()
             self.axes_recoveryChart.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
                                   width=width)
             self.recoveryChart_plot.draw()
 
     def output_all_paths(self, path, labels):
+        self.way_plainTextEdit.clear()
         for item in path:
             string = ''
             length = len(item) - 1
@@ -473,9 +478,11 @@ class MainWindow(QMainWindow):
             self.way_plainTextEdit.appendPlainText(string)
 
     def output_probability_chart(self, data):
+        self.axes_chartProbability.cla()
         self.axes_chartProbability.plot(data[1], data[0], 'r')
 
     def output_probability_formula(self, data):
+        self.probability_plainTextEdit.clear()
         common_formula_string = "P(t) = 1 - "
         for item in data:
             formula_string = f"P{data.index(item)}(t) = e^-("

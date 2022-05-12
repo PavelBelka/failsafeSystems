@@ -44,7 +44,6 @@ class Core:
         self.view.clearTables()
         del self.graph
         del self.network
-        del self.simulate
         gc.collect()
 
     def handle_save_settings_button_clicked(self, number_failure, number_repair, intensity, police_repair):
@@ -77,6 +76,6 @@ class Core:
             self.view.output_histogram(self.report.get_histogram_repair(), True)
         self.view.output_probability_chart(self.report.output_probability(data))
         self.view.output_probability_formula(data)
-        del paths, edges, nodes
+        del paths, edges, nodes, data
         del self.simulate
         gc.collect()
