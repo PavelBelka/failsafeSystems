@@ -615,10 +615,10 @@
   Edges:
     0:
       length: 12
-      name: AB
+      name: AF
       tuple_node:
       - 0
-      - 1
+      - 5
     1:
       length: 50
       name: BC
@@ -633,10 +633,10 @@
         - 3
     3:
       length: 50
-      name: CG
+      name: CE
       tuple_node:
-        - 3
-        - 6
+        - 2
+        - 4
     4:
       length: 69
       name: EF
@@ -650,22 +650,34 @@
         - 5
         - 1
     6:
+      length: 69
+      name: DG
+      tuple_node:
+        - 3
+        - 6
+    7:
       length: 79
       name: GH
       tuple_node:
         - 6
         - 7
-    7:
+    8:
       length: 89
       name: HI
       tuple_node:
         - 7
         - 8
-    8:
+    9:
       length: 25
       name: IJ
       tuple_node:
         - 8
+        - 9
+    10:
+      length: 25
+      name: DJ
+      tuple_node:
+        - 3
         - 9
   Nodes:
     0:
@@ -708,3 +720,307 @@
       index: 9
       intensity: 97
       name: J
+
+Дерево:
+  number_nodes: 15
+  Edges:
+    0:
+      length: 12
+      name: AB
+      tuple_node:
+      - 0
+      - 1
+    1:
+      length: 50
+      name: AC
+      tuple_node:
+        - 0
+        - 2
+    2:
+      length: 89
+      name: BD
+      tuple_node:
+        - 1
+        - 3
+    3:
+      length: 50
+      name: BE
+      tuple_node:
+        - 1
+        - 4
+    4:
+      length: 69
+      name: CF
+      tuple_node:
+        - 2
+        - 5
+    5:
+      length: 69
+      name: CG
+      tuple_node:
+        - 2
+        - 6
+    6:
+      length: 69
+      name: DH
+      tuple_node:
+        - 3
+        - 7
+    7:
+      length: 79
+      name: DI
+      tuple_node:
+        - 3
+        - 8
+    8:
+      length: 89
+      name: EJ
+      tuple_node:
+        - 4
+        - 9
+    9:
+      length: 25
+      name: EK
+      tuple_node:
+        - 4
+        - 10
+    10:
+      length: 25
+      name: FL
+      tuple_node:
+        - 5
+        - 11
+    11:
+      length: 50
+      name: FM
+      tuple_node:
+        - 5
+        - 12
+    12:
+      length: 72
+      name: GN
+      tuple_node:
+        - 6
+        - 13
+    13:
+      length: 34
+      name: GO
+      tuple_node:
+        - 6
+        - 14
+  Nodes:
+    0:
+      index: 0
+      intensity: 77
+      name: A
+    1:
+      index: 1
+      intensity: 745
+      name: B
+    2:
+      index: 2
+      intensity: 85
+      name: C
+    3:
+      index: 3
+      intensity: 99
+      name: D
+    4:
+      index: 4
+      intensity: 15
+      name: E
+    5:
+      index: 5
+      intensity: 88
+      name: F
+    6:
+      index: 6
+      intensity: 99
+      name: G
+    7:
+      index: 7
+      intensity: 97
+      name: H
+    8:
+      index: 8
+      intensity: 97
+      name: I
+    9:
+      index: 9
+      intensity: 97
+      name: J
+    10:
+      index: 10
+      intensity: 100
+      name: K
+    11:
+      index: 11
+      intensity: 220
+      name: L
+    12:
+      index: 12
+      intensity: 150
+      name: M
+    13:
+      index: 13
+      intensity: 80
+      name: N
+    14:
+      index: 14
+      intensity: 550
+      name: O
+
+Решетка:
+  number_nodes: 12
+  Edges:
+    0:
+      length: 12
+      name: AB
+      tuple_node:
+      - 0
+      - 1
+    1:
+      length: 50
+      name: AE
+      tuple_node:
+        - 0
+        - 4
+    2:
+      length: 89
+      name: BC
+      tuple_node:
+        - 1
+        - 2
+    3:
+      length: 50
+      name: BF
+      tuple_node:
+        - 1
+        - 5
+    4:
+      length: 69
+      name: CD
+      tuple_node:
+        - 2
+        - 3
+    5:
+      length: 69
+      name: CG
+      tuple_node:
+        - 2
+        - 6
+    6:
+      length: 69
+      name: DH
+      tuple_node:
+        - 3
+        - 7
+    7:
+      length: 79
+      name: EF
+      tuple_node:
+        - 4
+        - 5
+    8:
+      length: 89
+      name: EI
+      tuple_node:
+        - 4
+        - 8
+    9:
+      length: 25
+      name: FG
+      tuple_node:
+        - 5
+        - 6
+    10:
+      length: 25
+      name: FJ
+      tuple_node:
+        - 5
+        - 9
+    11:
+      length: 50
+      name: GH
+      tuple_node:
+        - 6
+        - 7
+    12:
+      length: 34
+      name: GK
+      tuple_node:
+        - 6
+        - 10
+    13:
+      length: 100
+      name: HL
+      tuple_node:
+        - 7
+        - 11
+    14:
+      length: 150
+      name: IJ
+      tuple_node:
+        - 8
+        - 9
+    15:
+      length: 245
+      name: JK
+      tuple_node:
+        - 9
+        - 10
+    16:
+      length: 186
+      name: KL
+      tuple_node:
+        - 10
+        - 11
+  Nodes:
+    0:
+      index: 0
+      intensity: 77
+      name: A
+    1:
+      index: 1
+      intensity: 745
+      name: B
+    2:
+      index: 2
+      intensity: 85
+      name: C
+    3:
+      index: 3
+      intensity: 99
+      name: D
+    4:
+      index: 4
+      intensity: 15
+      name: E
+    5:
+      index: 5
+      intensity: 88
+      name: F
+    6:
+      index: 6
+      intensity: 99
+      name: G
+    7:
+      index: 7
+      intensity: 97
+      name: H
+    8:
+      index: 8
+      intensity: 97
+      name: I
+    9:
+      index: 9
+      intensity: 97
+      name: J
+    10:
+      index: 10
+      intensity: 100
+      name: K
+    11:
+      index: 11
+      intensity: 220
+      name: L
