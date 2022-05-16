@@ -3,12 +3,11 @@ import yaml
 from MainWindow import MainWindow
 from graph import Graph
 from simulation import Simulation
-from report import Report
 from os import path
 import gc
 
 class Core:
-    def __init__(self, settings):
+    def __init__(self, settings, report):
         self.settings = settings
         self.view = MainWindow(self)
         self.view.set_settings(self.settings.get_settings())
@@ -16,7 +15,7 @@ class Core:
         self.network = None
         self.simulate = None
         self.graphs_data = None
-        self.report = Report()
+        self.report = report
         self.read_file_graphs()
 
     def window_show(self):
