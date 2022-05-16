@@ -383,20 +383,25 @@ class MainWindow(QMainWindow):
             try:
                 dict_node_table[self.failure_node_table.item(i,0).text()] = self.failure_node_table.item(i, 1).text()
             except:
-                dict_node_table['err'] = 'err'
+                dict_node_table = None
         for i in range(self.length_connection_table.rowCount()):
             try:
                 dict_edge_table[self.length_connection_table.item(i,0).text()] = self.length_connection_table.item(i, 1).text()
             except:
-                dict_edge_table['err'] = 'err'
-        self.presenter.handle_start_simulate_button_clicked(self.start_node_lineEdit.text(), self.end_node_lineEdit.text(),
-                                                            dict_node_table, dict_edge_table, self.intensity_connection_lineEdit.text(),
-                                                            self.is_recovery_checkBox.isChecked())
+                dict_edge_table = None
+        if not self.start_node_lineEdit.text() or not self.end_node_lineEdit.text() or not dict_node_table \
+                or not dict_edge_table or not self.intensity_connection_lineEdit.text():
+            pass
+        else:
+            self.presenter.handle_start_simulate_button_clicked(self.start_node_lineEdit.text(), self.end_node_lineEdit.text(),
+                                                                dict_node_table, dict_edge_table, self.intensity_connection_lineEdit.text(),
+                                                                self.is_recovery_checkBox.isChecked())
 
     def output_list_graphs(self, graphs):
         self.topology_comboBox.addItems(graphs)
 
     def drawGraph(self, graph, labels):
+        self.axes_fig.cla()
         pos = drawing.spring_layout(graph)
         draw(graph, pos, self.axes_fig)
         draw_networkx_labels(graph, pos, labels=labels, ax=self.axes_fig)
