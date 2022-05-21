@@ -44,7 +44,11 @@ class Simulation:
             for i in range(self.num_failure):
                 self.graph_simulate = self.graph.copy()
                 self.restore_state()
-                state = self.system_iteration(start_node, end_node)
+                if i == 0 and self.is_repair:
+                    state = self.system_iteration(start_node, end_node, True)
+                    self.report.set_repair_diagram(state[2], state[0])
+                else:
+                    state = self.system_iteration(start_node, end_node, False)
                 self.list_failure_times.append(state[0])
                 if self.is_repair:
                     self.list_repair_times.extend(state[1])
@@ -59,10 +63,12 @@ class Simulation:
             self.list_failure_times = None
             self.list_repair_times = None
 
-    def system_iteration(self, start_node, end_node):
+    def system_iteration(self, start_node, end_node, is_diagram):
         timestamp = 0.0
         list_task = []
         list_repair_time = []
+        if is_diagram:
+            list_diagram_failure = []
         repair_tasks = Repair(self.police_repair)
         recovery_team = self.num_teams
 
@@ -100,16 +106,20 @@ class Simulation:
                     except exception.NetworkXError:
                         pass
                 list_task.append(failure)
+                if is_diagram:
+                    list_diagram_failure.append([min_element[1].name, min_element[2], timestamp])
 
                 #Чиним?
                 if self.is_repair:
                     repair_tasks.add_task([min_element[1],
                                            min_element[0],
-                                           -1 * math.log(random.random()) / self.intensity_recovery])
+                                           -1 * math.log(random.random()) / (self.intensity_recovery * 1e-2)])
             elif min_element[2] == 'restore':
                 min_element[1].destroyed = False
                 recovery_team += 1
                 self.restore_graph(min_element[1])
+                if is_diagram:
+                    list_diagram_failure.append([min_element[1].name, min_element[2], timestamp])
 
             #Починка элемента
             while recovery_team > 0 and not repair_tasks.check_empty_queue() and self.is_repair:
@@ -117,7 +127,10 @@ class Simulation:
                 list_task.append([task[2] + timestamp, task[0], 'restore'])
                 recovery_team -= 1
                 list_repair_time.append(task[2])
-        return [timestamp, list_repair_time]
+        if is_diagram:
+            return [timestamp, list_repair_time, list_diagram_failure]
+        else:
+            return [timestamp, list_repair_time]
 
     def restore_graph(self, element):
         if isinstance(element, Node):
@@ -136,20 +149,21 @@ class Simulation:
         total = 0.0
         sums = 0
         element_fail = None
-#        list_conditional_intensities = []
         for element in self.list_elements:
             if not element.destroyed:
                 total = total + element.intensity
-        random_value = random.random()
-        rand = random_value * total
         for element in self.list_elements:
             if not element.destroyed:
-                sums = sums + element.intensity
-                if sums > rand:
+                element.conditional_intensity = element.intensity / total
+        random_value = random.random()
+        for element in self.list_elements:
+            if not element.destroyed:
+                sums = sums + element.conditional_intensity
+                if sums > random_value:
                     element_fail = element
                     break
         if element_fail is None:
             return  None
-        time_fail = -1 * math.log(random_value) / element_fail.intensity
+        time_fail = -1 / element_fail.intensity * math.log(random_value)
         timestamp = timestamp + time_fail
         return [timestamp, element_fail, 'refusal']

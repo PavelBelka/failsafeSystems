@@ -1,19 +1,21 @@
 import numpy as np
 
 class Node:
-    def __init__(self, name, index = None, destroyed = False, intensity = 0):
+    def __init__(self, name, index = None, destroyed = False, intensity = 0, conditional_intensity = 0.0):
         self.name = name
         self.index = index
         self.destroyed = destroyed
         self.intensity = intensity
+        self.conditional_intensity = conditional_intensity
 
 class Edge:
-    def __init__(self, name, tuple_node, destroyed = False, length = 0, intensity = 0):
+    def __init__(self, name, tuple_node, destroyed = False, length = 0, intensity = 0, conditional_intensity = 0.0):
         self.name = name
         self.tuple_node = tuple_node
         self.destroyed = destroyed
         self.length = length
         self.intensity = intensity
+        self.conditional_intensity = conditional_intensity
 
 class Graph:
     def __init__(self, num, nodes = None, edges = None):

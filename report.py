@@ -9,6 +9,8 @@ class Report:
         self.coefficient_ready = None
         self.histogram_failure = None
         self.histogram_repair = None
+        self.repair_diagram = None
+        self.last_diagram_timestamp = None
         self.num_bars = 100
 
     def calculation_min_time(self, data):
@@ -26,6 +28,7 @@ class Report:
     def calculation_coefficient_ready(self):
         self.coefficient_ready = self.average_time_failure / (self.average_time_failure + self.average_time_repair)
 
+
     def calculate_histogram(self, data, min_data = None, max_data = None, internal = True, repair = False):
         if internal:
             minimum = np.min(data)
@@ -37,6 +40,10 @@ class Report:
             self.histogram_repair = np.histogram(data, self.num_bars, (minimum, maximum), density=False)
         else:
             self.histogram_failure = np.histogram(data, self.num_bars, (minimum, maximum), density=False)
+
+    def set_repair_diagram(self, data, timestamp):
+        self.repair_diagram = data
+        self.last_diagram_timestamp = timestamp
 
     def get_data_result(self):
         return [self.min_time, self.max_time, self.average_time_failure, self.average_time_repair, self.coefficient_ready]
@@ -69,3 +76,28 @@ class Report:
         common_list.append(probability_list)
         result = self.calculate_graph_probability(common_list)
         return [result, x]
+
+    def output_repair_diagram(self, nodes, edges):
+        all_elements = nodes + edges
+        dict_elements = {element.name: [] for element in all_elements}
+        repair_elements = self.repair_diagram.copy()
+        for item in all_elements:
+            frame = []
+            suma = 0
+            for diagram in repair_elements:
+                if item.name == diagram[0]:
+                    if diagram[1] == 'refusal':
+                        frame.append([diagram[2], 'green'])
+                        suma+= diagram[2]
+                    elif diagram[1] == 'restore':
+                        frame.append([diagram[2], 'red'])
+            if suma != 0:
+                if len(frame) == 1:
+                    frame.append([self.last_diagram_timestamp + 10, 'red'])
+                elif frame[-1][1] == 'red':
+                    frame.append([self.last_diagram_timestamp + 10, 'green'])
+            if suma == 0:
+                dict_elements[item.name].append([self.last_diagram_timestamp + 10, 'green'])
+            else:
+                dict_elements[item.name].extend(frame)
+        return dict_elements

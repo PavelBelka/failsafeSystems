@@ -457,18 +457,29 @@ class MainWindow(QMainWindow):
             self.average_time_repair_lineEdit.setText(str(result[3]))
             self.koeff_ready_lineEdit.setText(str(result[4]))
 
-    def output_histogram(self, histogram_failure, is_repair):
+    def output_histogram(self, histogram_failure):
         width = 0.7 * (histogram_failure[1][1] - histogram_failure[1][0])
-        if not is_repair:
-            self.axes_failure.cla()
-            self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
-                                  width=width)
-            self.failure_plot.draw()
-        else:
-            self.axes_recoveryChart.cla()
-            self.axes_recoveryChart.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
-                                  width=width)
-            self.recoveryChart_plot.draw()
+        self.axes_failure.cla()
+        self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
+                              width=width)
+        self.failure_plot.draw()
+
+    def output_repair_histogram(self, histogram_failure):
+        self.axes_recoveryChart.cla()
+        for item in histogram_failure:
+            for obj in histogram_failure[item]:
+                index = histogram_failure[item].index(obj)
+                if index == 0:
+                    self.axes_recoveryChart.barh(item, obj[0], left=0, color=obj[1])
+                else:
+                    self.axes_recoveryChart.barh(item, obj[0] - histogram_failure[item][histogram_failure[item].index(obj) - 1][0],
+                                                 left=histogram_failure[item][histogram_failure[item].index(obj) - 1][0],
+                                                 color=obj[1])
+#        width = 0.7 * (histogram_failure[1][1] - histogram_failure[1][0])
+#        for item in histogram_failure[0]:
+#        self.axes_recoveryChart.hist((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
+#                                    width=width)
+        self.recoveryChart_plot.draw()
 
     def output_all_paths(self, path, labels):
         self.way_plainTextEdit.clear()
