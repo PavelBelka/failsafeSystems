@@ -276,7 +276,7 @@ class MainWindow(QMainWindow):
         self.recoveryChartGroupBox.setGeometry(QRect(0, 270, 950, 390))
 
         self.fig_recoveryChart = Figure(dpi = 100)
-        self.fig_recoveryChart.subplots_adjust(left=0.06, bottom=0.07, right=0.98, top=0.98)
+        self.fig_recoveryChart.subplots_adjust(left=0.04, bottom=0.07, right=0.98, top=0.98)
         self.axes_recoveryChart = self.fig_recoveryChart.add_subplot(111)
         self.recoveryChart_plot = FigureCanvasQTAgg(self.fig_recoveryChart)
         self.vbox_recoveryChart = QHBoxLayout()
@@ -413,6 +413,10 @@ class MainWindow(QMainWindow):
         self.axes_failure.cla()
         self.axes_recoveryChart.cla()
         self.axes_chartProbability.cla()
+        self.axes_chartProbability.set_xlabel('Время работы сети в часах')
+        self.axes_chartProbability.set_ylabel('Вероятность отказа')
+        self.axes_failure.set_xlabel('Время работы сети в часах')
+        self.axes_failure.set_ylabel('Количество')
         self.graph_plot.draw()
         self.failure_plot.draw()
         self.recoveryChart_plot.draw()
@@ -462,6 +466,9 @@ class MainWindow(QMainWindow):
         self.axes_failure.cla()
         self.axes_failure.bar((histogram_failure[1][:-1] + histogram_failure[1][1:]) / 2, histogram_failure[0],
                               width=width)
+        self.axes_failure.set_xlabel('Время работы сети в часах')
+        self.axes_failure.set_ylabel('Количество')
+        self.axes_failure.grid()
         self.failure_plot.draw()
 
     def output_repair_histogram(self, histogram_failure):
@@ -496,6 +503,9 @@ class MainWindow(QMainWindow):
     def output_probability_chart(self, data):
         self.axes_chartProbability.cla()
         self.axes_chartProbability.plot(data[1], data[0], 'r')
+        self.axes_chartProbability.set_xlabel('Время работы сети в часах')
+        self.axes_chartProbability.set_ylabel('Вероятность отказа')
+        self.axes_chartProbability.grid()
 
     def output_probability_formula(self, data):
         self.probability_plainTextEdit.clear()

@@ -33,8 +33,6 @@ class Core:
     def handle_graph_create_button_clicked(self, topology):
         self.graph = Graph(self.graphs_data[topology]['number_nodes'])
         self.graph.build_graph(self.graphs_data[topology])
-        if self.network is not None:
-            self.network = None
         self.network = nx.from_numpy_matrix(self.graph.get_matrix(), create_using=nx.MultiGraph)
         self.view.drawGraph(self.network, self.graph.get_labels())
         self.view.output_table_nodes(self.graph.get_nodes())

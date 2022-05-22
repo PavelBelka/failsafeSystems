@@ -66,7 +66,7 @@ class Report:
     def output_probability(self, data):
         common_list = []
         probability_list = []
-        x = np.linspace(0, self.max_time / 90, 100)
+        x = np.linspace(0, self.max_time / 80, 100)
         common_list.append(x)
         for item in data:
             sum_prob = 0
@@ -93,11 +93,11 @@ class Report:
                         frame.append([diagram[2], 'red'])
             if suma != 0:
                 if len(frame) == 1:
-                    frame.append([self.last_diagram_timestamp + 10, 'red'])
+                    frame.append([self.last_diagram_timestamp + 100, 'red'])
                 elif frame[-1][1] == 'red':
-                    frame.append([self.last_diagram_timestamp + 10, 'green'])
+                    frame.append([self.last_diagram_timestamp + 100, 'green'])
             if suma == 0:
-                dict_elements[item.name].append([self.last_diagram_timestamp + 10, 'green'])
+                dict_elements[item.name].append([self.last_diagram_timestamp + 100, 'green'])
             else:
                 dict_elements[item.name].extend(frame)
         return dict_elements
